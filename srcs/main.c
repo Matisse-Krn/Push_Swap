@@ -185,6 +185,27 @@ void	free_str(char **tabtab)
 	free(tabtab);
 }
 
+static char	**take_all_args(int argc, char **argv)
+{
+	char	**input;
+	int		i;
+
+	input = ft_calloc(argc, sizeof(char *));
+	if (!input)
+		return (NULL);
+	i = -1;
+	while (++i < argc - 1)
+	{
+		if (!argv[i + 1] || !(*argv[i + 1]))
+			return (free_str(input), input = NULL);
+		input[i] = ft_strdup(argv[i + 1]);
+		if (!input[i])
+			return (NULL);
+	}
+	input[i] = NULL;
+	return (input);
+}
+
 /*
  * Determines whether elements are passed :
  *	  in a single string : `./push_swap “54 32 87"`
@@ -192,11 +213,9 @@ void	free_str(char **tabtab)
  * Extract each element and assign it to an array of arrays 'input'
 */
 static char	**extract_input(int argc, char **argv)
-{	
+{
 	char	**input;
-	int		i;
 
-	i = -1;
 	if (argc == 2)
 	{
 		if (!argv[1])
@@ -207,18 +226,9 @@ static char	**extract_input(int argc, char **argv)
 	}
 	else if (argc > 2)
 	{
-		input = ft_calloc(argc, sizeof(char *));
+		input = take_all_args(argc, argv);
 		if (!input)
 			return (NULL);
-		while (++i < argc - 1)
-		{
-			if (!argv[i + 1] || !(*argv[i + 1]))
-				return (free_str(input), input = NULL);
-			input[i] = ft_strdup(argv[i + 1]);
-			if (!input[i])
-				return (NULL);
-		}
-		input[i] = NULL;
 	}
 	else
 		return (NULL);

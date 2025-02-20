@@ -51,7 +51,6 @@ int		check_if_asc_sorted_list(t_dlist *stack);
 int		check_if_desc_sorted_list(t_dlist *stack);
 int		*set_final_position(int *tab, int len, t_dlist **stack);
 
-
 void	push_a(t_dlist **stack_a, t_dlist **stack_b);
 void	push_b(t_dlist **stack_a, t_dlist **stack_b);
 void	swap_a(t_dlist **stack_a, char name);
@@ -64,16 +63,12 @@ void	reverse_rotate_a(t_dlist **stack_a, char name);
 void	reverse_rotate_b(t_dlist **stack_b, char name);
 void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
 
-
 void	reverse_list(t_dlist **stack_a, t_dlist **stack_b, int len);
 void	sort_stacks(t_dlist **stack_a, t_dlist **stack_b, int len);
 void	set_target(t_dlist **stack_a, t_dlist **stack_b);
 void	set_cost_to_top(t_dlist **stack_a, t_dlist **stack_b);
 void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_sort(t_dlist **stack_a);
-
-
-
 
 /*// TEMPORAIRES :
 void test_push(t_dlist **stack_a, t_dlist **stack_b);
