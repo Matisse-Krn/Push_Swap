@@ -1,0 +1,159 @@
+- DONE :
+
+	- Gestion du cas ou simplement une chaine vide (ou qui ne contient aucun caractere valide (nombre)) est passee en parametre;
+
+	- Gestion des cas ou la liste fournie par l'utilisateur est triee dans l'ordre decroissant et est de taille 3;
+
+	- Gestion des cas ou la liste fournie par l'utilisateur est triee dans l'ordre decroissant mais n'est pas de taille 2 (> 2);
+
+	- Implementation de l'algorithme :
+
+		- Principes :
+			- Depuis 'sort_stack()', tous les elements de 'stack_a' sauf les 3 derniers
+			  sont envoyes vers 'stack_b' ('pb');
+			  
+			- Depuis 'sort_stack()', grace a 'sort_three()' les 3 derniers elements de
+			  'stack_a' sont tries;
+			  
+			- Des qu'un element est envoye dans 'stack_b' (apres un 'push_b()'), on
+			  verifie si sa valeur est superieure a la valeur mediane de la liste triee :
+			  si il est superieur, on "l'envoit" au bas (a la fin) de la 'stack_b' grace a
+			  'rotate_b()' ('rb');
+			  
+			- Depuis 'sort_stack()', une fois que tous les elements initialement dans
+			  'stack_a' sauf 3 sont envoyes dans la 'stack_b', on calcule a chaque tour le
+			  cout de deplacement pour chacun des elements de 'stack_b', afin que
+			  l'element en question soit place au meilleur endroit : au dessus de sa
+			  'target'.
+			   	- Par meilleur endroit, on entend dans 'set_target()' :
+			   		- Juste "au dessus" de sa 'target' : element de 'stack_a' dont
+			   		  la valeur est superieure a la sienne et la plus proche de sa
+			   		  valeur.
+			   		- Si aucun element dans 'stack_a' ne lui est superieur, alors
+			   		  il devrat aller "au dessus" de l'element ayant la valeur
+			   		  mininale de tous les elements de 'stack_a' (identifie grace
+			   		  a 'find_minimum_target()').
+			   	- Le cout est calcule comme ceci grace a 'set_cost_to_top()' et
+			   	  'set_final_cost()' :
+			   		- Pour savoir "combien ca couterait", on regarde :
+			   			- Pour chaque element des deux stacks :
+			   			- Si l'index de l'element actuel indique que l'element
+			   			  se trouve dans la "premiere moitie" de la liste,
+			   			  alors on considere que :
+ 							- Son cout = son index :
+ 							  Le nombre de fois ou il faudra 'rotate_()')
+ 							  la stack vers le haut pour qu'il revienne
+ 							  en tete de liste;
+						- Sinon (si il est dans la deuxieme moitie de la
+						  liste), on considere que :
+ 							- Son cout =
+ 							[la taille totale de sa stack] - [son index] :
+				    			  Le nombre de fois ou il faudra
+				    			  'reverse_rotate_()' la stack vers le bas
+				    			  pour qu'il revienne en tete de liste);
+			   		- Grace a 'set_cost_to_top()', on regarde dans 'stack_b'
+			   		  combien ca couterait (en nombre d'instructions) de faire
+			   		  "remonter" l'element actuel (celui pour lequel on calcule le
+			   		  cout) a la tete de 'stack_b';
+			   		- Grace a 'set_cost_to_top()', on regarde dans 'stack_a'
+			   		  combien ca couterait (en nombre d'instructions) de faire
+			   		  "remonter" la 'target' de l'element dans 'stack_b' a la tete
+			   		  de 'stack_a';
+			   		- Grace a 'set_final_cost()', on additionne les deux
+			   		  resultats (nombres d'instructions) obtenus, afin d'obtenir
+			   		  le cout total pour placer l'element a l'endroit "ideal";
+
+			- Depuis 'sort_stacks()', on appelle 'determine_next_movement()' afin de
+			  recuperer l'element coutant le moins cher a placer correctement dans
+			  'stack_a'. Si ils sont plusieurs dans 'stack_b' a couter le meme nombre
+			  d'instructions, alors c'est le premier element rencontre qui est retenu;
+			  
+			- Depuis 'determine_next_movement()', on recupere grace a 'move_to_top()',
+			  les actions a effectuer afin de remonter en tete avec le moins
+			  d'instructions possible les deux elements du couple 
+			  [element de 'stack_b' coutant le - cher] et [sa 'target' dans 'stack_a'] :
+			  	- '-1' = 'reverse_rotate_()';
+			  	- '1' = 'rotate_()';
+			  	- '0' = rien a faire, deja en tete de liste;
+				- Si les resultats pour l'element dans 'stack_b' et sa target dans
+				  'stack_a' sont identiques, alors on les "fusionne" pour diminuer le
+				  nombre d'instructions :
+			    		- Exemple : si 'rotate_a()' ('1') et 'rotate_b()' ('1') sont
+			    		  retournes, alors on effectuera 'rotate_r()');
+
+			- On 'push_a()' l'element de 'stack_b' des que lui et sa target sont a la tete
+			  de leur stack respective;
+			
+			- Pour finir, une fois que tous les elements de 'stack_b' sont envoyes dans
+			  'stack_a', on appelle depuis 'sort_stacks()' la fonction 'finish_sort()',
+			  qui sert a effectuer le nombre de 'reverse_rotate_a()' ou de 'rotate_a()'
+			  necessaires afin de decaler le debut de tri qui n'est pas "aligne" avec la
+			  suite de 'stack_a'.
+			  Le fait de regarder si la fin de "la marche" (= tete de liste triee mais pas
+			  alignee avec la suite) est avant ou apres la moitie de la 'stack_a' pour
+			  decider si l'on doit 'rotate_a()' ou 'reverse_rotate_a()' a optimise
+			  l'algorithme de presque 1000 instructions sur une serie de 500 elements ! 
+			
+			
+		- Performances v0 (SANS optimisation de 'finish_sort()'), par series de 10 000 tests :
+			- Pour 500 nombres :
+				- la mediane est a 5608 instructions;
+				- la pire serie est a 6215 instructions;
+				- la meilleure serie est a 5048 instructions;
+
+			- Pour 100 nombres :
+				- la mediane est a 634 instructions;
+				- la pire serie est a 743 instructions;
+				- la meilleure serie est a 527 instructions;
+
+			- Pour 5 nombres :
+				- la mediane est a 10 instructions;
+				- la pire serie est a 13 instructions;
+				- la meilleure serie est a 0 instruction;
+
+			- Pour 3 nombres :
+				- la mediane est a 2 instructions;
+				- la pire serie est a 3 instructions;
+				- la meilleure serie est a 0 instruction;		
+				
+				
+				
+				
+		- Performances v1 (AVEC optimisation de 'finish_sort()') :
+			- Pour 500 nombres (sur 10 000 series) :
+				- la mediane est a 4783 instructions;
+				- la pire serie est a 5260 instructions;
+				- la meilleure serie est a 4278 instructions;
+
+			- Pour 100 nombres (sur 100 000 series) :
+				- la mediane est a 594 instructions;
+				- la pire serie est a 701 instructions;
+				- la meilleure serie est a 491 instructions;
+
+			- Pour 5 nombres (sur 100 000 series) :
+				- la mediane est a 9 instructions;
+				- la pire serie est a 12 instructions;
+				- la meilleure serie est a 0 instruction;
+
+			- Pour 3 nombres (sur 10 000 series) :
+				- la mediane est a 1 instructions;
+				- la pire serie est a 2 instructions;
+				- la meilleure serie est a 0 instruction;
+
+- TODO :
+
+
+	- Essayer de trouver une solution au probleme de funcheck qui segfault lorsqu'une chaine de caracteres est passee comme parametre;
+	- Comprendre pourquoi un des testers renvoit des "TLE" alors que non ?
+	- Verifier puis corriger libft/ft_split.c modifie accidentalement dans le repo officiel/source;
+	
+	
+	
+	Idee 'Window' :
+		
+		- "Decouper" les elements par proportion de leur index de position finale. Se concentrer sur le 1er range/window : ~1/10 de 'n' (nombre d'elements).
+		   Par exemple, si 'n' = 100, alors le premier chunk qu'il faudra chercher a envoyer vers 'stack_b' sont les
+		   elements dont l'index de position finale/triee ('pos') se situe dans la "window" entre 0 et 9 
+		   ((1/10 * n) - 1 = (1/10 * 100) - 1).
+		- Si le 'pos' (position finale) de l'element en tete de 'stack_a' est > a "window", 
+		

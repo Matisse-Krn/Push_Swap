@@ -1,0 +1,962 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_lists.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 01:21:16 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/15 02:11:05 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static t_dlist	*init_stack_a(int *tab, int len)
+{
+	t_dlist	*stack_a;
+
+	stack_a = tab_to_list(tab, len);
+	if (check_if_asc_sorted_list(stack_a) == 1)
+		ft_printf("List is already ascending sorted : exit.\n"); // exit
+	else if (check_if_desc_sorted_list(stack_a) == 1)
+		ft_printf("List is descending sorted.\n"); // "just" reverse the order	
+	return (stack_a);
+//	free_list(stack_a);
+}
+
+void	create_lists(int *tab, int len)
+{
+	t_dlist	*stack_a;
+	t_dlist	*stack_b;
+
+	stack_a = init_stack_a(tab, len);
+	stack_b = NULL;
+	test_push(stack_a, stack_b);
+}
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instructions.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 00:26:17 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/15 02:15:43 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+// la tete (1er element) de la liste doit etre la plus petite valeur a la fin du programme	
+
+void	push(t_dlist **from, t_dlist **to, char dst)
+{
+	t_dlist	*tmp;
+
+	if (!(*from))
+		return ;
+	tmp = *from;
+	*from = (*from)->next;
+	if (*from)
+		(*from)->prev = NULL;
+	tmp->next = *to;
+	if (*to)
+		(*to)->prev = tmp;
+	*to = tmp;
+	ft_printf("p%c\n", dst);
+	// reattribuer les bons index
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/14 02:29:14 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/14 02:41:34 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+/*
+ * Return 1 if the list is sorted in ascending order, else return 0
+*/
+int	  check_if_asc_sorted_list(t_dlist *current)
+{
+	t_dlist	*i;
+	t_dlist	*j;
+
+	i = current;
+	while (i != NULL)
+	{
+		j = i->next;
+		while (j != NULL)
+		{
+			if (i->value < j->value)
+				j = j->next;
+			else
+				return (0);
+		}
+		i = i->next;
+	}
+	return (1);
+}
+
+/*
+ * Return 1 if the list is sorted in descending order, else return 0
+*/
+int	  check_if_desc_sorted_list(t_dlist *current)
+{
+	t_dlist	*i;
+	t_dlist	*j;
+
+	i = current;
+	while (i != NULL)
+	{
+		j = i->next;
+		while (j != NULL)
+		{
+			if (i->value > j->value)
+				j = j->next;
+			else
+				return (0);
+		}
+		i = i->next;
+	}
+	return (1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 00:24:52 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/15 01:31:20 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+t_dlist	*dlst_new(int value, int index, char name)
+{
+	t_dlist	*new;
+
+	new = ft_calloc(1, sizeof(t_dlist));
+	if (!new)
+		return (NULL);
+	new->value = value;
+	new->index = index;
+	new->name = name;
+	new->next = NULL;
+	new->prev = NULL;
+	return (new);
+}
+
+void	dlst_add_last(t_dlist **dlist, t_dlist *new)
+{
+	t_dlist *tmp;
+
+	if (!dlist || !new)
+		return ;
+	if (!*dlist)
+	{
+		*dlist = new;
+		return ;
+	}
+	tmp = *dlist;
+	while (tmp->next != NULL)
+		tmp = tmp->next; 
+	new->prev = tmp;
+	tmp->next = new;
+}
+
+t_dlist	*tab_to_list(int *tab, int len)
+{
+	int		i;
+	t_dlist	*head;
+	t_dlist	*new;
+
+	head = dlst_new(tab[0], 0, 'a');
+	i = 0;
+	while (++i < len -1)
+	{
+		new = dlst_new(tab[i], i, 'a');
+		dlst_add_last(&head, new);
+	}
+	return (head);
+}
+
+void	free_list(t_dlist *head)
+{
+	t_dlist	*tmp;
+	t_dlist	*next;
+
+	tmp = head;
+	while (tmp != NULL)
+	{
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
+	}
+}
+
+void	init_stack_a(int *tab, int len)
+{
+	t_dlist	*stack_a;
+
+	stack_a = tab_to_list(tab, len);
+	if (check_if_asc_sorted_list(stack_a) == 1)
+		ft_printf("List is already ascending sorted : exit.\n"); // exit
+	else if (check_if_desc_sorted_list(stack_a) == 1)
+		ft_printf("List is descending sorted.\n"); // "just" reverse the order	
+	free_list(stack_a);
+}
+
+/*
+void	dlst_swap(t_dlist *a, t_dlist *b)
+{
+	t_dlist	*tmp;
+
+	if (!a || !b)
+		return ;
+
+	tmp = ft_calloc(1, sizeof(t_dlist));
+	
+	tmp->value = a->value;
+	tmp->next = a->next;
+	tmp->prev = a->prev;
+	tmp->index = a->index;
+
+//	tmp = a;
+	a->next = b->next;
+	a->prev = b->prev;
+	a->index = b->index;
+	a->value = b->value;
+	
+	b->next = tmp->next;
+	b->prev = tmp->prev;
+	b->index = tmp->index;
+	b->value = tmp->value;
+	free(tmp);
+}
+
+int	main(void)
+{
+	t_dlist *head;
+	t_dlist	*element2;
+	t_dlist	*element3;
+	t_dlist	*element4;
+	t_dlist	*element5;
+	t_dlist	*tmp;
+
+	head = dlst_new(1, 0, 'a');
+//	ft_printf("Element '%d' at index '%d', in stack '%c'\n",
+//		   head->value, head->index, head->name);
+	element2 = dlst_new(2, 1, 'a');
+	dlst_add_last(&head, element2);
+//	ft_printf("Element '%d' at index '%d', in stack '%c'\n",
+//		   head->next->value, head->next->index, head->next->name);
+//	ft_printf("The previous element before 'element%d' is 'element%d'\n", element2->value, element2->prev->value);
+	element3 = dlst_new(3, 2, 'a');
+	dlst_add_last(&head, element3);
+	element4 = dlst_new(4, 3, 'a');
+	dlst_add_last(&head, element4);
+	element5 = dlst_new(5, 4, 'a');
+	dlst_add_last(&head, element5);
+	ft_printf("head->next = element%d\n", head->next->value);
+	ft_printf("element%d->next = element%d\n", head->next->value, head->next->next->value);
+	tmp = head;
+	ft_printf("Original list : ");
+	while (tmp->next != NULL)
+	{
+		ft_printf("'Element%d' -> ", tmp->value);
+		tmp = tmp->next;
+	}
+	ft_printf("'Element%d'\n", tmp->value);
+
+
+
+
+	dlst_swap(element2, element4);
+	
+
+
+
+	tmp = head;
+	ft_printf("Final list    : ");
+	while (tmp->next != NULL)
+	{
+		ft_printf("'Element%d' -> ", tmp->value);
+		tmp = tmp->next;
+	}
+	ft_printf("'Element%d'\n", tmp->value);
+
+
+
+	free(head);
+	free(element2);
+	free(element3);
+	free(element4);
+	//free(tmp);
+	return (0);
+}
+*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:07:13 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/15 01:23:45 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+/*
+ * Free all arrays in the array of arrays, to prevent leaks
+*/
+static void	free_all(char **tabtab)
+{
+	int	i;
+
+	if (!tabtab)
+		return ;
+	i = -1;
+	while (tabtab[++i])
+	{
+		if (tabtab[i])
+			free(tabtab[i]);
+	}
+	if (tabtab[i])
+		free(tabtab[i]);
+	free(tabtab);
+}
+
+/*
+ * Determines whether elements are passed :
+ *	  in a single string : `./push_swap “54 32 87"`
+ *	  one by one : `./push_swap 54 32 87`
+ * Extract each element and assign it to an array of arrays 'list'
+*/
+static char	**extract_list(int argc, char **argv)
+{	
+	char	**list;
+	int		i;
+
+	i = -1;
+	if (argc == 2)
+	{
+		list = ft_split(argv[1], ' ');
+		if (!list)
+			return (NULL);
+	}
+	else if (argc > 2)
+	{
+		list = ft_calloc(argc, sizeof(char *));
+		while (++i < argc - 1)
+			list[i] = ft_strdup(argv[i + 1]);
+		list[i] = NULL;
+		i = -1;
+	}
+	else
+		return (NULL);
+	return (list);
+}
+
+
+
+/*
+ * Calls 'parse_input()' to extract the 'list' of all elements,
+ * Calls the 'check_all()' function to perform all input checks/verifications.
+*/
+int	main(int argc, char **argv)
+{
+	char	**list;
+	int		*tab;
+	int		len;
+
+	list = extract_list(argc, argv);
+	if (!list)
+		return (1);
+	if (parsing_check(list))
+	{
+		free_all(list);
+		return (1);
+	}
+	tab = convert_str_to_tab(list, &len);
+	free_all(list);
+	create_lists(tab, len);
+/*	while (head != NULL)
+	{
+		if (head->next == NULL)
+			ft_printf("'element%d'\n", head->value);
+		ft_printf("'element%d' -> ", head->value);
+		head = head->next;
+	}
+*/	
+	free(tab);
+	return (0);
+}
+
+/*
+ * Cas spécifiques à tester
+
+    Cas valides simples :
+        "4 1 2 3" (entrée en une seule chaîne)
+        4 1 2 3 (entrée en arguments séparés)
+        -42 0 42 2147483647 -2147483648
+
+    Cas limites et bords :
+        2147483647 -2147483648 (limites de l'entier 32 bits)
+        0 (cas minimaliste)
+        1 2 3 4 5 6 7 8 9 10 (test de liste ordonnée)
+        10 9 8 7 6 5 4 3 2 1 (test de liste inversée)
+
+    Cas d'erreurs de format :
+        42a (nombre invalide contenant une lettre)
+        +42- (mauvais placement des signes)
+        --5 (plusieurs signes)
+        4.2 (nombre non entier)
+        "" (entrée vide)
+ " " (entrée uniquement constituée d'espaces)
+        " 4 5 6 " (espaces excessifs mais valides)
+
+    Cas de dépassement des limites :
+        2147483648 (dépassement de INT_MAX)
+        -2147483649 (dépassement de INT_MIN)
+        9999999999 (nombre trop grand)
+        -9999999999 (nombre trop petit)
+
+    Cas de doublons :
+        1 2 3 4 5 2 (un nombre en double)
+        100 -100 100 (nombre positif et négatif identiques)
+        2147483647 2147483647 (duplication du max)
+        -2147483648 -2147483648 (duplication du min)
+*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 17:30:43 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/14 02:49:46 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+/*
+ * Check if the element 's' :
+ *		- is only constitute by a single '-' or '+' sign at the beginning,
+*		and only digits char after
+ *		- is not only a single '+' or '-' without anything else
+ * Return 0 if the element is valid, otherwise return 1
+*/
+static int	check_if_valid_digit(char *s)
+{
+	int	i;
+	int	sign;
+
+	i = -1;
+	sign = 0;
+//	ft_printf("'%s' have %d len\n", s, ft_strlen(s));
+	while (s[++i])
+	{
+		if (!(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+')
+			return (1);
+		if (s[i] == '+' || s[i] == '-')
+	{
+			sign++;
+			if (!s[i + 1] || sign > 1)
+				return (1);
+		}
+	}
+	return (0);
+}
+
+/*
+ * Convert string to integer with 'ft_atoi()' -> 'atoi_res'
+ * Convert 'atoi_res' to string with 'ft_itoa()' -> 'itoa_res'
+ * Normalize element (“+00045” -> “45”,...), and compare with 'itoa_res'
+*/
+static int	check_int_overflow(char *s)
+{
+	int		atoi_res;
+	char	*itoa_res;
+	char	*simple_s;
+
+	atoi_res = ft_atoi(s);
+	if (atoi_res == 0 && str_is_zero(s) != 0)			  
+	{
+	//	ft_printf("HEEERE is precise overflow\n");
+		return (-1);
+	}
+	itoa_res = ft_itoa(atoi_res);
+	simple_s = delete_surplus(s);
+	s = simple_s;
+	if (ft_strcmp(itoa_res, s))
+	{
+		free(simple_s);
+		free(itoa_res);
+		return (1);
+	}
+	free(itoa_res);
+	free(simple_s);
+	return (0);
+}
+
+/*
+ * Verify if an element is duplicate in the array
+ * Because we use this function after 'delete_surplus()', we assure that initial
+ *		strange formatted elements are normalized :
+ *		"-0045" -> "-45"    |   "+045" -> "45"   |   "+78" -> "78"
+*/
+static int	check_duplicate(char **tab)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (tab[++i])
+	{
+		j = i;
+		while (tab[++j])
+		{
+			if (ft_atoi(tab[i]) == ft_atoi(tab[j]))
+			{
+			//	ft_printf("'%s' is duplicate with '%s' : exit.\n\n", tab[i], tab[j]);
+				return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+
+
+/*
+ * Calls 'check_if_valid_digit()' for each element,
+ * Then checks if each element is contained in an INT or if it is overflow,
+ * Then checks that there are no duplicate elements in the 'list'.
+ *
+ * Returns 1 if overflow, 0 otherwise
+*/
+int	parsing_check(char **list)
+{
+	int	i;
+
+	i = -1;
+	while (list[++i])
+	{
+		if (check_if_valid_digit(list[i]))
+		{
+			ft_putstr_fd("Error\n", 2);
+			ft_printf("🚨🚨  '%s' is invalid : exit.  🚨🚨\n\n", list[i]);
+			return (1);
+		}
+	}
+	i = -1;
+	while (list[++i])
+	{
+		if (check_int_overflow(list[i]))
+		{
+			ft_putstr_fd("Error\n", 2);
+			ft_printf("🚨🚨  '%s' int overflow : exit.  🚨🚨\n\n", list[i]);
+			return (1);
+		}
+	}
+	i = -1;
+	while (list[++i])
+	{
+		if (check_duplicate(list))
+		{
+			ft_putstr_fd("Error\n", 2);
+			ft_printf("🚨🚨 '%s' is duplicate in this array : exit.  🚨🚨\n\n", list[i]);
+			return (1);
+
+		}
+	}
+	ft_printf("⭐⭐⭐  All elements are valid.  ⭐⭐⭐\n\n");
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 17:38:22 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/14 02:47:31 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+/*
+ * Find the real length of a number represented by a string :
+ *		- "2147483647" = 10   ->   "0002147483647" = 10
+ *		- "+78" = 2			  ->   "+0078" = 2
+ *		- "0" = 1			  ->   -0" = 1
+ * Because we use this in 'delete_surplus()' after treating the cases of "-000",
+ *	  we can't have an input who 's' = "-0000" (or "+0", "-0", "+00",...)
+*/
+int	real_length(char *s)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	if (s[i] == '+')
+		i++;
+	if (s[i] == '-')
+	{
+		len++;
+		i++;
+	}
+	while (s[i] == '0')
+		i++;
+	while (s[i++])
+		len++;
+	return (len);
+}
+
+/*
+ * Return 0 if the value of the int represented by 's' is 0 
+ *	  ('+000', '-0000', '+0',...), or return 1
+*/
+int	str_is_zero(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	while (s[i] == '0')
+		i++;
+	if (!s[i])
+		return (0);
+	return (1);
+}
+
+/*
+ * Delete all superfluous char :
+ *		-	"0045"	 ->  "45"
+ *		-	"-0045"  ->  "-45"
+ *		-	"+45"	 ->  "45"
+ *		-	"+0045"  ->  "45"
+ *		-	"-0"	 ->  "0"
+*/
+char	*delete_surplus(char *s)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*dst;
+
+	if (str_is_zero(s) == 0)
+	{
+		dst = ft_calloc(2, sizeof(char));
+		dst[0] = '0';
+		return (dst);
+	}
+	len = real_length(s);
+	dst = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	j = 0;
+	if (s[i] == '-')
+	{
+		i++;
+		dst[j++] = '-';
+	}
+	while (s[i] == '0')
+		i++;
+	while (s[i])
+		dst[j++] = s[i++];
+	return (dst);
+}
+
+int	*convert_str_to_tab(char **s, int *len)
+{
+	int	i;
+	int	*tab;
+
+	if (!s)
+		return (NULL);
+	i = -1;
+	while (s[++i])
+		;
+	*len = i + 1;
+	tab = ft_calloc(i + 1, sizeof(int));
+	i = -1;
+	while (s[++i])
+		tab[i] = ft_atoi(s[i]);
+	return (tab);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tmp.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 01:54:15 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/15 02:14:10 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+static void	print_stack(t_dlist *stack, char name)
+{
+	t_dlist	*current;
+
+	ft_printf("Stack %c:\n", name);
+	if (!stack)
+	{
+		ft_printf("   (empty)\n");
+		return;
+	}
+	current = stack;
+	while (current)
+	{
+		ft_printf("   [%d] value: %d\n", current->index, current->value);
+		current = current->next;
+	}
+	ft_printf("\n");
+}
+
+static void	print_stacks(t_dlist *stack_a, t_dlist *stack_b)
+{
+	ft_printf("\n-----------------------\n");
+	print_stack(stack_a, 'A');
+	print_stack(stack_b, 'B');
+	ft_printf("-----------------------\n\n");
+}
+
+void test_push(t_dlist *stack_a, t_dlist *stack_b)
+{
+	ft_printf("Avant pb :\n");
+	print_stacks(stack_a, stack_b);
+
+	push(&stack_a, &stack_b, 'b');
+	push(&stack_a, &stack_b, 'b');
+	ft_printf("Après pb pb :\n");
+	print_stacks(stack_a, stack_b);
+
+	push(&stack_b, &stack_a, 'a');
+	ft_printf("Après pa :\n");
+	print_stacks(stack_a, stack_b);
+}
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:00:20 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/10 14:00:55 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include "libft.h"
+
+typedef struct s_dlist
+{
+	int				value;
+	int				index;
+	int				pos;
+	char			name;
+	struct s_dlist	*prev;
+	struct s_dlist	*next;
+}					t_dlist;
+
+int		parsing_check(char **list);
+int		str_is_zero(char *s);
+int		real_length(char *s);
+char	*delete_surplus(char *s);
+int		*convert_str_to_tab(char **s, int *len);
+
+t_dlist	*dlst_new(int value, int index, char name);
+t_dlist	*tab_to_list(int *tab, int len);
+//t_dlist	*init_stack_a(int *tab, int len);
+void	dlst_add_last(t_dlist **dlst, t_dlist *new);
+void	free_list(t_dlist *head);
+
+void	create_lists(int *tab, int len);
+int		check_if_asc_sorted_list(t_dlist *current);
+int		check_if_desc_sorted_list(t_dlist *current);
+
+
+void	push(t_dlist **from, t_dlist **to, char dst);
+
+
+
+
+
+
+
+void test_push(t_dlist *stack_a, t_dlist *stack_b);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:00:20 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/10 14:00:55 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include "libft.h"
+
+typedef struct s_dlist
+{
+	int				value;
+	int				index;
+	int				pos;
+	char			name;
+	struct s_dlist	*prev;
+	struct s_dlist	*next;
+}					t_dlist;
+
+int		parsing_check(char **list);
+int		str_is_zero(char *s);
+int		real_length(char *s);
+char	*delete_surplus(char *s);
+int		*convert_str_to_tab(char **s, int *len);
+void	free_str(char **tabtab);
+
+t_dlist	*dlst_new(int value, int index, char name);
+void	tab_to_list(t_dlist **stack_a, int *tab, int len);
+//t_dlist	*init_stack_a(int *tab, int len);
+void	dlst_add_last(t_dlist **dlst, t_dlist *new);
+void	free_list(t_dlist *head);
+int		*sort_tab(int *tab, int len);
+
+void	create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len);
+void	reassign_index(t_dlist **stack);
+int		check_if_asc_sorted_list(t_dlist *stack);
+int		check_if_desc_sorted_list(t_dlist *stack);
+int		*set_final_position(int *tab, int len, t_dlist **stack);
+
+
+void	push_a(t_dlist **stack_a, t_dlist **stack_b);
+void	push_b(t_dlist **stack_a, t_dlist **stack_b);
+void	swap_a(t_dlist **stack_a, char name);
+void	swap_b(t_dlist **stack_b, char name);
+void	swap_s(t_dlist **stack_a, t_dlist **stack_b, char name);
+void	rotate_a(t_dlist **stack_a, char name);
+void	rotate_b(t_dlist **stack_b, char name);
+void	rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
+void	reverse_rotate_a(t_dlist **stack_a, char name);
+void	reverse_rotate_b(t_dlist **stack_b, char name);
+void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
+
+
+
+
+
+
+// TEMPORAIRES :
+void test_push(t_dlist **stack_a, t_dlist **stack_b);
+void	print_stack(t_dlist *stack, char name);
+void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
+
+#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:00:20 by mkerrien          #+#    #+#             */
+/*   Updated: 2025/02/10 14:00:55 by mkerrien         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+
+# include "libft.h"
+
+typedef struct s_dlist
+{
+	int				value;
+	int				index;
+	int				pos;
+	char			name;
+	struct s_dlist	*prev;
+	struct s_dlist	*next;
+}					t_dlist;
+
+int		parsing_check(char **list);
+int		str_is_zero(char *s);
+int		real_length(char *s);
+char	*delete_surplus(char *s);
+int		*convert_str_to_tab(char **s, int *len);
+void	free_str(char **tabtab);
+
+t_dlist	*dlst_new(int value, int index, char name);
+void	tab_to_list(t_dlist **stack_a, int *tab, int len);
+//t_dlist	*init_stack_a(int *tab, int len);
+void	dlst_add_last(t_dlist **dlst, t_dlist *new);
+void	free_list(t_dlist *head);
+int		*sort_tab(int *tab, int len);
+
+void	create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len);
+void	reassign_index(t_dlist **stack);
+int		check_if_asc_sorted_list(t_dlist *stack);
+int		check_if_desc_sorted_list(t_dlist *stack);
+int		*set_final_position(int *tab, int len, t_dlist **stack);
+
+
+void	push_a(t_dlist **stack_a, t_dlist **stack_b);
+void	push_b(t_dlist **stack_a, t_dlist **stack_b);
+void	swap_a(t_dlist **stack_a, char name);
+void	swap_b(t_dlist **stack_b, char name);
+void	swap_s(t_dlist **stack_a, t_dlist **stack_b, char name);
+void	rotate_a(t_dlist **stack_a, char name);
+void	rotate_b(t_dlist **stack_b, char name);
+void	rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
+void	reverse_rotate_a(t_dlist **stack_a, char name);
+void	reverse_rotate_b(t_dlist **stack_b, char name);
+void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
+
+
+
+
+
+
+// TEMPORAIRES :
+void test_push(t_dlist **stack_a, t_dlist **stack_b);
+void	print_stack(t_dlist *stack, char name);
+void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
+
+#endif
