@@ -28,6 +28,7 @@ static t_dlist	*init_stack_a(int *tab, int len, t_dlist *stack_b)
 	{
 		reverse_list(&stack_a, &stack_b, len);
 		free_list(stack_a);
+		free_list(stack_b);
 		free(tab);
 		exit(0);
 	}
@@ -50,23 +51,20 @@ static void	set_median(int *sort, int len, t_dlist **stack_a)
 	tmp->median = 1;
 }
 
-void	create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len)
+int	create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len)
 {
 	int		*sort;
 
 	*stack_a = init_stack_a(tab, len, *stack_b);
 	if (!(*stack_a))
-	{
-		free_list(*stack_b);
-		return ;
-	}
+		return (free_list(*stack_b), 1);
 	sort = ft_calloc(len, sizeof(int));
 	if (!sort)
-		return ;
+		return (free_list(*stack_a), 1);
 	sort_tab(tab, sort, len);
 	if (!sort)
-		free(stack_a);
+		return (free(stack_a), 1);
 	set_final_position(sort, len, stack_a);
 	set_median(sort, len, stack_a);
-	free(sort);
+	return (free(sort), 0);
 }

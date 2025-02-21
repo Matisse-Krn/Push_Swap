@@ -48,6 +48,8 @@ void	sort_stacks(t_dlist **stack_a, t_dlist **stack_b, int len)
 	while (++i < len - 3)
 	{
 		push_b(stack_a, stack_b);
+		if (!(*stack_b))
+			return ;
 		if ((*stack_b)->value > median)
 			rotate_b(stack_b, 'b');
 	}

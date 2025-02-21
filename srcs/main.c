@@ -261,9 +261,8 @@ int	main(int argc, char **argv)
 	if (!tab)
 		return (free_str(input), 1);
 	free_str(input);
-	create_lists(&stack_a, &stack_b, tab, len);
-	if (!stack_a)
-		return (0);
+	if (create_lists(&stack_a, &stack_b, tab, len))
+		return (1);
 	sort_stacks(&stack_a, &stack_b, len);
 	free_list(stack_a);
 	free_list(stack_b);

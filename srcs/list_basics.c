@@ -76,6 +76,8 @@ void	tab_to_list(t_dlist **stack_a, int *tab, int len)
 	while (++i < len)
 	{
 		new = dlst_new(tab[i], i, 'a');
+		if (!new)
+			return ;
 		dlst_add_last(stack_a, new);
 	}
 }
