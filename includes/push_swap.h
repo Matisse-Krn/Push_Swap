@@ -70,6 +70,10 @@ void	set_cost_to_top(t_dlist **stack_a, t_dlist **stack_b);
 void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_sort(t_dlist **stack_a);
 
+/*Bonus : */
+int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b,
+		int len/*, int *tab*/);
+
 /*// TEMPORAIRES :
 void test_push(t_dlist **stack_a, t_dlist **stack_b);
 void	print_stack(t_dlist *stack, char name);

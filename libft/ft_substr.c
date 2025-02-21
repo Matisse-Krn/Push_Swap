@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 #include "libft.h"
 
+// Renvoie une nouvelle chaine de taille 'len' extraite depuis
+// l'index 'start' de 's';
+// Si l'index 'start' est superieur ou egal a la taille de 's',
+// alors on retourne NULL;
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
@@ -21,13 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
-	{
-		sub = malloc(1);
-		if (!sub)
-			return (NULL);
-		*sub = '\0';
-		return (sub);
-	}
+		return (NULL);
 	if (len > (s_len - start))
 		len = s_len - start;
 	sub = malloc(sizeof(char) * (len + 1));

@@ -6,7 +6,7 @@
 /*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 04:05:06 by mkerrien          #+#    #+#             */
-/*   Updated: 2025/02/21 04:13:37 by mkerrien         ###   ########.fr       */
+/*   Updated: 2025/02/21 05:13:30 by mkerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	main(int argc, char **argv)
 	if (create_lists(&stack_a, &stack_b, tab, len))
 		return (1);
 //	sort_stacks(&stack_a, &stack_b, len);
+	checker_instructions(&stack_a, &stack_b, len/*, tab*/);
 	free_list(stack_a);
 	free_list(stack_b);
 	return (0);

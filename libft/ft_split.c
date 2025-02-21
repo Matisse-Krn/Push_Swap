@@ -6,7 +6,7 @@
 /*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:13:40 by mkerrien          #+#    #+#             */
-/*   Updated: 2025/02/19 11:20:33 by mkerrien         ###   ########.fr       */
+/*   Updated: 2024/11/15 20:16:09 by mkerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -63,7 +63,7 @@ static void	ft_alloc_write(char const *s, char c, unsigned int nb, char **tab)
 	unsigned int	i;
 	unsigned int	j;
 
-	if (!s|| !tab)
+	if (!s || !tab)
 		return ;
 	i = 0;
 	while (i < nb)

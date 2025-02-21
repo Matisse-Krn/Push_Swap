@@ -60,7 +60,8 @@ SRC			=./ft_isalpha.c \
 			./ft_putunbr.c \
 			./ft_puthex.c \
 			./ft_putptr.c \
-			./ft_printf.c
+			./ft_printf.c \
+			./get_next_line.c
 
 BONUS_SRC	=./ft_lstnew_bonus.c \
 			./ft_lstadd_front_bonus.c \

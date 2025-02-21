@@ -9,62 +9,75 @@
 #    Updated: 2025/02/19 19:48:33 by mkerrien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-CC			= cc
 
-CFLAGS		= -Wall -Wextra -Werror -g3
+CC				= cc
 
-NAME		= push_swap
+CFLAGS			= -Wall -Wextra -Werror -g3
 
-NAME_BONUS 	= checker
+NAME			= push_swap
 
-LIBPATH 	= -Llibft
+NAME_BONUS 		= checker
 
-LIBNAME 	= -lft
+LIBPATH 		= -Llibft
 
-SRC			= 	$(addprefix srcs/, \
-			main.c \
-			parsing/parsing.c \
-			parsing/parsing_utils.c \
-			create_lists.c \
-			list_basics.c \
-			list_utils.c \
-			instructions/instructions_rotate.c \
-			instructions/instructions_push.c \
-			instructions/instructions_swap.c \
-			instructions/instructions_reverse_rotate.c \
-			sort/simple_sort.c \
-			sort/sorting1.c \
-			sort/sorting2.c \
-			sort/cost_and_target.c)
+LIBNAME 		= -lft
 
-SRC_BONUS	= $(addprefix srcs/bonus/, \
-			  main_bonus.c \
-			  parsing/parsing_bonus.c \
-			  parsing/parsing_utils_bonus.c)
+SRC				= $(addprefix srcs/, \
+				  main.c \
+				  parsing/parsing.c \
+				  parsing/parsing_utils.c \
+				  create_lists.c \
+				  list_basics.c \
+				  list_utils.c \
+				  instructions/instructions_rotate.c \
+				  instructions/instructions_push.c \
+				  instructions/instructions_swap.c \
+				  instructions/instructions_reverse_rotate.c \
+				  sort/simple_sort.c \
+				  sort/sorting1.c \
+				  sort/sorting2.c \
+				  sort/cost_and_target.c)
 
-INCLUDE		= -Ilibft -Iincludes
+SRC_BONUS		= $(addprefix srcs/bonus/, \
+				  main_bonus.c \
+				  checker_bonus.c \
+			  	  parsing/parsing_bonus.c \
+			  	  parsing/parsing_utils_bonus.c \
+)
 
-OBJ			= $(SRC:.c=.o)
+INCLUDE			= -Ilibft -Iincludes
 
-all			: $(NAME)
+OBJ				= $(SRC:.c=.o)
 
-%.o 		: %.c
+OBJ_BONUS		= $(SRC_BONUS:.c=.o)
+
+all				: $(NAME)
+
+bonus			: $(NAME_BONUS)
+
+%.o 			: %.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ >>/dev/null
 
-$(NAME)		: $(OBJ)
+$(NAME)			: $(OBJ)
 	@echo "Launching compilation..."
 	@make -sC libft >>/dev/null
 	@$(CC) $(CFLAGS) $(SRC) $(LIBPATH) $(INCLUDE) $(LIBNAME) -o $(NAME)
 	@echo "\nCompilation done !\n"
 
-clean		:
+$(NAME_BONUS)	: $(OBJ_BONUS)
+	@echo "Launching bonus compilation..."
+	@make -sC libft >>/dev/null
+	@$(CC) $(CFLAGS) $(SRC_BONUS) $(LIBPATH) $(INCLUDE) $(LIBNAME) -o $(NAME_BONUS)
+	@echo "\nBonus compilation done !\n"
+
+clean			:
 	@make clean -sC libft/
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJ_BONUS)
 
-fclean		: clean
+fclean			: clean
 	@make fclean -sC libft/
-	rm -f $(NAME) ./libft/*.a
+	rm -f $(NAME) $(NAME_BONUS) ./libft/*.a
 
-re			: fclean all
+re				: fclean all
 
-.PHONY		: all clean fclean re
+.PHONY			: all bonus clean fclean re

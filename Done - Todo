@@ -143,17 +143,19 @@
 - TODO :
 
 
-	- Essayer de trouver une solution au probleme de funcheck qui segfault lorsqu'une chaine de caracteres est passee comme parametre;
-	- Comprendre pourquoi un des testers renvoit des "TLE" alors que non ?
-	- Verifier puis corriger libft/ft_split.c modifie accidentalement dans le repo officiel/source;
-	
-	
-	
-	Idee 'Window' :
-		
-		- "Decouper" les elements par proportion de leur index de position finale. Se concentrer sur le 1er range/window : ~1/10 de 'n' (nombre d'elements).
-		   Par exemple, si 'n' = 100, alors le premier chunk qu'il faudra chercher a envoyer vers 'stack_b' sont les
-		   elements dont l'index de position finale/triee ('pos') se situe dans la "window" entre 0 et 9 
-		   ((1/10 * n) - 1 = (1/10 * 100) - 1).
-		- Si le 'pos' (position finale) de l'element en tete de 'stack_a' est > a "window", 
-		
+	- Bonus part (checker);
+    
+	- (already done?) Check and correct libft/ft_split.c accidentally modified in the official/source repo;
+    
+	- Reflect on the implementation of Get_Next_Line in libft/;
+
+
+	Idee bonus (checker) :
+		- ✅ Parser l'input (la suite de nombres), 
+		  si tout est OK continuer, sinon "Error",
+		- ✅ Creer la liste chainee,
+		- Lire chacune des lignes depuis l'entree standard avec GNL, et a chaque ligne :
+				- Verifier si l'instruction existe : si oui continuer, si non "Error",
+				- Executer l'instructions (sans rien ecrire en sortie),
+		- Apres la derniere ligne lue, verifier si la liste est triee et
+		  complete (que 'stack_b' soit bien vide). Si oui "OK", si non "KO".
