@@ -9,17 +9,19 @@
 #    Updated: 2025/02/19 19:48:33 by mkerrien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-CC		= cc
+CC			= cc
 
-CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS		= -Wall -Wextra -Werror -g3
 
-NAME	= push_swap 
+NAME		= push_swap
 
-LIBPATH = -Llibft
+NAME_BONUS 	= checker
 
-LIBNAME = -lft
+LIBPATH 	= -Llibft
 
-SRC		= 	$(addprefix srcs/, \
+LIBNAME 	= -lft
+
+SRC			= 	$(addprefix srcs/, \
 			main.c \
 			parsing/parsing.c \
 			parsing/parsing_utils.c \
@@ -35,29 +37,34 @@ SRC		= 	$(addprefix srcs/, \
 			sort/sorting2.c \
 			sort/cost_and_target.c)
 
-INCLUDE	= -Ilibft -Iincludes
+SRC_BONUS	= $(addprefix srcs/bonus/, \
+			  main_bonus.c \
+			  parsing/parsing_bonus.c \
+			  parsing/parsing_utils_bonus.c)
 
-OBJ		= $(SRC:.c=.o)
+INCLUDE		= -Ilibft -Iincludes
 
-all		: $(NAME)
+OBJ			= $(SRC:.c=.o)
 
-%.o 			: %.c
+all			: $(NAME)
+
+%.o 		: %.c
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ >>/dev/null
 
-$(NAME)	: $(OBJ)
+$(NAME)		: $(OBJ)
 	@echo "Launching compilation..."
 	@make -sC libft >>/dev/null
 	@$(CC) $(CFLAGS) $(SRC) $(LIBPATH) $(INCLUDE) $(LIBNAME) -o $(NAME)
 	@echo "\nCompilation done !\n"
 
-clean	:
+clean		:
 	@make clean -sC libft/
 	rm -f $(OBJ)
 
-fclean	: clean
+fclean		: clean
 	@make fclean -sC libft/
 	rm -f $(NAME) ./libft/*.a
 
-re		: fclean all
+re			: fclean all
 
-.PHONY	: all clean fclean re
+.PHONY		: all clean fclean re
