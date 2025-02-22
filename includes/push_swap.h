@@ -6,7 +6,7 @@
 /*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 14:00:20 by mkerrien          #+#    #+#             */
-/*   Updated: 2025/02/19 20:36:12 by mkerrien         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:40:55 by mkerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,31 @@ void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_sort(t_dlist **stack_a);
 
 /*Bonus : */
-int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b,
-		int len/*, int *tab*/);
+int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b);
+void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab);
+void	push_a_bonus(t_dlist **stack_a, t_dlist **stack_b);
+void	push_b_bonus(t_dlist **stack_a, t_dlist **stack_b);
+void	swap_a_bonus(t_dlist **stack_a);
+void	swap_b_bonus(t_dlist **stack_b);
+void	swap_s_bonus(t_dlist **stack_a, t_dlist **stack_b);
+void	rotate_a_bonus(t_dlist **stack_a);
+void	rotate_b_bonus(t_dlist **stack_b);
+void	rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
+void	reverse_rotate_a_bonus(t_dlist **stack_a);
+void	reverse_rotate_b_bonus(t_dlist **stack_b);
+void	reverse_rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
 
-/*// TEMPORAIRES :
-void test_push(t_dlist **stack_a, t_dlist **stack_b);
-void	print_stack(t_dlist *stack, char name);
-void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
-*/
+
+
+
+
+
+
+
+
+// TEMPORAIRES :
+//void test_push(t_dlist **stack_a, t_dlist **stack_b);
+//void	print_stack(t_dlist *stack, char name);
+//void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
+
 #endif

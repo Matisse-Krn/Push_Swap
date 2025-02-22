@@ -6,7 +6,7 @@
 #    By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 15:34:25 by mkerrien          #+#    #+#              #
-#    Updated: 2025/02/19 19:48:33 by mkerrien         ###   ########.fr        #
+#    Updated: 2025/02/22 06:42:30 by mkerrien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,16 @@ SRC				= $(addprefix srcs/, \
 SRC_BONUS		= $(addprefix srcs/bonus/, \
 				  main_bonus.c \
 				  checker_bonus.c \
+				  checker_bonus_utils.c \
 			  	  parsing/parsing_bonus.c \
 			  	  parsing/parsing_utils_bonus.c \
+				  create_lists_bonus.c \
+				  list_basics_bonus.c \
+				  list_utils_bonus.c \
+				  instructions/instructions_rotate_bonus.c \
+				  instructions/instructions_push_bonus.c \
+				  instructions/instructions_swap_bonus.c \
+				  instructions/instructions_reverse_rotate_bonus.c \
 )
 
 INCLUDE			= -Ilibft -Iincludes

@@ -140,22 +140,32 @@
 				- la pire serie est a 2 instructions;
 				- la meilleure serie est a 0 instruction;
 
-- TODO :
+-  DONE :
 
 
-	- Bonus part (checker);
+	- ✅ Check and correct libft/ft_split.c accidentally modified in
+		  the official/source repo;
     
-	- (already done?) Check and correct libft/ft_split.c accidentally modified in the official/source repo;
-    
-	- Reflect on the implementation of Get_Next_Line in libft/;
+	- ✅ Reflect on the implementation of Get_Next_Line in libft/;
 
-
-	Idee bonus (checker) :
+	- Bonus (checker) :
 		- ✅ Parser l'input (la suite de nombres), 
 		  si tout est OK continuer, sinon "Error",
 		- ✅ Creer la liste chainee,
-		- Lire chacune des lignes depuis l'entree standard avec GNL, et a chaque ligne :
-				- Verifier si l'instruction existe : si oui continuer, si non "Error",
-				- Executer l'instructions (sans rien ecrire en sortie),
-		- Apres la derniere ligne lue, verifier si la liste est triee et
+		- ✅ Lire chacune des lignes depuis l'entree standard avec GNL, et a chaque
+		     ligne :
+				- ✅ Verifier si l'instruction existe : si oui continue, si non "Error",
+		- ✅ Executer toutes les instructions recues (sans rien ecrire en sortie),
+		- ✅ Apres la derniere ligne lue, verifier si la liste est triee et
 		  complete (que 'stack_b' soit bien vide). Si oui "OK", si non "KO".
+		- ✅ Norm OK
+
+- TODO :
+
+
+	- Creer 'push_swap_bonus.h', mettre a jour l'"#include" dans l'en-tete des fichiers
+	  de la partie bonus,...
+
+	- Bonus (checker) :
+		- ☢️  Gerer le cas ou l'utilisateur n'entre que des instructions invalides et
+		     fait ensuite CTRL + D : aucun leak requis !

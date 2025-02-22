@@ -6,7 +6,7 @@
 /*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 04:05:06 by mkerrien          #+#    #+#             */
-/*   Updated: 2025/02/21 05:13:30 by mkerrien         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:21:33 by mkerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ void	free_str(char **tabtab)
 		return ;
 	i = -1;
 	while (tabtab[++i])
+	{
 		free(tabtab[i]);
+		tabtab[i] = NULL;
+	}
 	free(tabtab);
+	tabtab = NULL;
 }
 
 static char	**take_all_args(int argc, char **argv)
@@ -105,8 +109,7 @@ int	main(int argc, char **argv)
 	free_str(input);
 	if (create_lists(&stack_a, &stack_b, tab, len))
 		return (1);
-//	sort_stacks(&stack_a, &stack_b, len);
-	checker_instructions(&stack_a, &stack_b, len/*, tab*/);
+	checker_instructions(&stack_a, &stack_b);
 	free_list(stack_a);
 	free_list(stack_b);
 	return (0);

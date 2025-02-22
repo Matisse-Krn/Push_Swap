@@ -6,7 +6,7 @@
 /*   By: mkerrien <mkerrien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 01:54:15 by mkerrien          #+#    #+#             */
-/*   Updated: 2025/02/18 20:19:45 by mkerrien         ###   ########.fr       */
+/*   Updated: 2025/02/22 06:06:22 by mkerrien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	determine_what_to_print(t_dlist *stack)
 {
+	t_dlist	*tmp;
+
 	tmp = stack;
 	while (tmp)
 	{
@@ -41,8 +43,6 @@ cost: %d\n", tmp->index, tmp->value, tmp->pos, tmp->target->value, tmp->cost);
 
 static void	print_stack(t_dlist *stack, char name)
 {
-	t_dlist	*tmp;
-
 	ft_printf("Stack %c:\n", name);
 	if (!stack)
 	{
