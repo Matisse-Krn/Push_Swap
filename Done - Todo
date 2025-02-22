@@ -168,4 +168,4 @@
 
 	- Bonus (checker) :
 		- ☢️  Gerer le cas ou l'utilisateur n'entre que des instructions invalides et
-		     fait ensuite CTRL + D : aucun leak requis !
+		     fait ensuite CTRL + D : aucun leak autorise !
