@@ -26,9 +26,9 @@ SRC				= $(addprefix srcs/, \
 				  main.c \
 				  parsing/parsing.c \
 				  parsing/parsing_utils.c \
-				  lists/create_lists.c \
-				  lists/list_basics.c \
-				  lists/list_utils.c \
+				  create_lists.c \
+				  list_basics.c \
+				  list_utils.c \
 				  instructions/instructions_rotate.c \
 				  instructions/instructions_push.c \
 				  instructions/instructions_swap.c \
@@ -36,18 +36,17 @@ SRC				= $(addprefix srcs/, \
 				  sort/simple_sort.c \
 				  sort/sorting1.c \
 				  sort/sorting2.c \
-				  sort/cost_and_target.c \
-				  lists/print_stacks.c)
+				  sort/cost_and_target.c)
 
 SRC_BONUS		= $(addprefix srcs/bonus/, \
-				  main/main_bonus.c \
-				  main/checker_bonus.c \
-				  main/checker_bonus_utils.c \
+				  main_bonus.c \
+				  checker_bonus.c \
+				  checker_bonus_utils.c \
 			  	  parsing/parsing_bonus.c \
 			  	  parsing/parsing_utils_bonus.c \
-				  lists/create_lists_bonus.c \
-				  lists/list_basics_bonus.c \
-				  lists/list_utils_bonus.c \
+				  create_lists_bonus.c \
+				  list_basics_bonus.c \
+				  list_utils_bonus.c \
 				  instructions/instructions_rotate_bonus.c \
 				  instructions/instructions_push_bonus.c \
 				  instructions/instructions_swap_bonus.c \

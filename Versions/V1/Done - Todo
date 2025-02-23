@@ -143,26 +143,19 @@
 -  DONE :
 
 
-		- ✅ Rename 'tmp.c' file into 'print_stacks.c', and add it in 'srcs/lists/' if
-		  needed to be used during the correction;
+	- ✅ Implementation of Get_Next_Line in libft/;
 
-		- ✅ Create 'srcs/lists/', 'srcs/bonus/lists', and 'srcs/bonus/main/'
-			 directories to better organize the sources files;
-
-		- ✅ Clear render directory;
-		
-		- ✅ Archiving previous fonctionnal version (with testers and all project files)
-			 in 'Versions/V1/' directory;
+	- Bonus (checker) :
+		- ✅ Creer 'push_swap_bonus.h', mettre a jour l'"#include" dans l'en-tete des
+			 fichiers de la partie bonus,...
+		- ✅ Gestion du cas ou l'utilisateur n'entre que des instructions invalides et
+		     fait ensuite CTRL + D : aucun leak autorise !
+		- ✅ Gestion du cas ou l'utilisateur n'entre aucune instruction et
+		     fait ensuite CTRL + D : aucun leak ni segfault autorise !
 
 - TODO :
 
 
-		- Add an explanatory comment above each function...!
-
 		- ❓ Create a visualizer for the bonus part...?
-
-		- ☢️  Clone the current repo into the vogsphere repo !
-		
-		- Delete this file ('Done - Todo') from the final render directory !
-		
-		- ☢️  Follow the 'check_list_before_push' !
+		- ❓ Delete the 'tmp.c' file ?
+		- Clear render directory
