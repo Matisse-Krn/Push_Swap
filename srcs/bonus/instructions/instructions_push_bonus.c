@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	push_a_bonus(t_dlist **stack_a, t_dlist **stack_b)
 {

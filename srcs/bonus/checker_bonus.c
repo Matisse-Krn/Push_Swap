@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 static int	check_if_valid_instruction(char *s)
 {
@@ -97,7 +97,10 @@ int	checker_instructions(t_dlist **stack_a, t_dlist **stack_b)
 				instructions = add_line(line, instructions);
 		}
 	}
-	exec_and_check(stack_a, stack_b, instructions);
-	free_str(instructions);
+	if (instructions)
+	{
+		exec_and_check(stack_a, stack_b, instructions);
+		free_str(instructions);
+	}
 	return (0);
 }

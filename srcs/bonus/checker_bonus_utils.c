@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 static void	exec_all_two(t_dlist **stack_a,
 						t_dlist **stack_b,
