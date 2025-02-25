@@ -13,13 +13,30 @@
 #include "push_swap.h"
 
 /*
- * Check if the element 's' :
- *		- is only constitute by a single '-' or '+' sign at the beginning,
-*		and only digits char after
- *		- is not only a single '+' or '-' without anything else
- * Return 0 if the element is valid, return -1 if NULL str is passed to,
- *		otherwise return 1
-*/
+ * Function: check_if_valid_digit
+ * --------------------------------
+ * Description:
+ *   Checks if a string represents a valid integer format. It verifies that
+ *   every character is either a digit or a valid sign ('+' or '-'), and that
+ *   the sign is used correctly.
+ *
+ * Parameters:
+ *   - char *s: The input string to be validated.
+ *
+ * Behavior:
+ *   1. Returns -1 if the string is NULL or empty.
+ *   2. Iterates through each character in the string.
+ *   3. If a character is neither a digit nor a sign, returns 1.
+ *   4. Increments a counter when a '+' or '-' is encountered.
+ *   5. If a sign is not followed by a digit or if more than one sign is
+ *      found, returns 1.
+ *   6. Returns 0 if the string is a valid representation.
+ *
+ * Returns:
+ *   - 0 if the string is valid.
+ *   - 1 if an invalid character or sign misuse is detected.
+ *   - -1 if the string is NULL or empty.
+ */
 static int	check_if_valid_digit(char *s)
 {
 	int	i;
@@ -44,10 +61,33 @@ static int	check_if_valid_digit(char *s)
 }
 
 /*
- * Convert string to integer with 'ft_atoi()' -> 'atoi_res'
- * Convert 'atoi_res' to string with 'ft_itoa()' -> 'itoa_res'
- * Normalize element (“+00045” -> “45”,...), and compare with 'itoa_res'
-*/
+ * Function: check_int_overflow
+ * ------------------------------
+ * Description:
+ *   Validates that the numeric value in the string fits within the integer
+ *   range. It converts the string to an integer using ft_atoi, then back to a
+ *   string with ft_itoa. The original string is simplified using
+ *   delete_surplus and compared to the converted string to detect overflow or
+ *   invalid formatting.
+ *
+ * Parameters:
+ *   - char *s: The string representing the integer.
+ *
+ * Behavior:
+ *   1. Converts the string to an integer (atoi_res) using ft_atoi.
+ *   2. If atoi_res is 0 and the string does not properly represent zero,
+ *      returns -1.
+ *   3. Converts the integer back to a string (itoa_res) using ft_itoa.
+ *   4. Simplifies the original string using delete_surplus.
+ *   5. Compares the simplified string to itoa_res using ft_strcmp.
+ *   6. Frees allocated memory before returning.
+ *
+ * Returns:
+ *   - 0 if the string is within the integer range and properly formatted.
+ *   - 1 if an overflow or formatting error is detected.
+ *   - -1 if the result of ft_atoi is zero but the initial string does not
+ *	   represent a zero.
+ */
 static int	check_int_overflow(char *s)
 {
 	int		atoi_res;
@@ -70,11 +110,26 @@ static int	check_int_overflow(char *s)
 }
 
 /*
- * Verify if an element is duplicate in the array
- * Because we use this function after 'delete_surplus()', we assure that initial
- *		strange formatted elements are normalized :
- *		"-0045" -> "-45"    |   "+045" -> "45"   |   "+78" -> "78"
-*/
+ * Function: check_duplicate
+ * -------------------------
+ * Description:
+ *   Checks for duplicate integer values in an array of strings. It assumes
+ *   that the strings have been normalized (e.g. no extra leading zeros or
+ *   signs) before the check.
+ *
+ * Parameters:
+ *   - char **tab: The array of string representations of integers.
+ *
+ * Behavior:
+ *   1. Iterates over the array using a nested loop.
+ *   2. Converts each pair of strings to integers using ft_atoi.
+ *   3. If any two converted integers are equal, returns 1.
+ *   4. Returns 0 if no duplicates are found.
+ *
+ * Returns:
+ *   - 1 if a duplicate is detected.
+ *   - 0 if all elements are unique.
+ */
 static int	check_duplicate(char **tab)
 {
 	int	i;
@@ -94,12 +149,33 @@ static int	check_duplicate(char **tab)
 }
 
 /*
- * Calls 'check_if_valid_digit()' for each element,
- * Then checks if each element is contained in an INT or if it is overflow,
- * Then checks that there are no duplicate elements in the 'list'.
+ * Function: parsing_check
+ * -------------------------
+ * Description:
+ *   Validates an array of input strings by performing multiple checks:
+ *     a. Validates each string's digit format using
+ *        check_if_valid_digit.
+ *     b. Verifies that each string represents an integer within range by
+ *        calling check_int_overflow.
+ *     c. Checks for duplicate numbers using check_duplicate.
  *
- * Returns 1 if overflow, 0 otherwise
-*/
+ * Parameters:
+ *   - char **list: The array of input strings.
+ *
+ * Behavior:
+ *   1. Returns an error if the list is NULL or empty.
+ *   2. Iterates through each string and validates its digit format.
+ *      If any string fails, prints "Error" to stderr and returns 1.
+ *   3. Iterates again to check for integer overflow in each string.
+ *      On failure, prints "Error" to stderr and returns 1.
+ *   4. Checks for duplicate values. If duplicates are found, prints
+ *      "Error" to stderr and returns 1.
+ *   5. Returns 0 if all checks pass successfully.
+ *
+ * Returns:
+ *   - 0 if all inputs are valid.
+ *   - 1 if any validation error is detected.
+ */
 int	parsing_check(char **list)
 {
 	int	i;
