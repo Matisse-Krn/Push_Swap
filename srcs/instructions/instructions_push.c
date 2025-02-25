@@ -39,15 +39,14 @@ void	push_b(t_dlist **stack_a, t_dlist **stack_b)
 		return ;
 	tmp = *stack_a;
 	*stack_a = (*stack_a)->next;
-	if (stack_a && *stack_a)
+	if (*stack_a)
 		(*stack_a)->prev = NULL;
 	if (!(*stack_b))
 	{
-		*stack_b = dlst_new(tmp->value, 0, 'b');
-		if (!(*stack_b))
-			return ;
-		(*stack_b)->pos = tmp->pos;
-		free(tmp);
+		tmp->next = NULL;
+		tmp->prev = NULL;
+		tmp->name = 'b';
+		*stack_b = tmp;
 	}
 	else
 	{
