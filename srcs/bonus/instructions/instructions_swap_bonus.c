@@ -24,6 +24,9 @@ void	swap_a_bonus(t_dlist **stack_a)
 	tmp = (*stack_a)->pos;
 	(*stack_a)->pos = (*stack_a)->next->pos;
 	(*stack_a)->next->pos = tmp;
+	tmp = (*stack_a)->median;
+	(*stack_a)->median = (*stack_a)->next->median;
+	(*stack_a)->next->median = tmp;
 	reassign_index(stack_a, NULL);
 }
 
@@ -39,6 +42,9 @@ void	swap_b_bonus(t_dlist **stack_b)
 	tmp = (*stack_b)->pos;
 	(*stack_b)->pos = (*stack_b)->next->pos;
 	(*stack_b)->next->pos = tmp;
+	tmp = (*stack_b)->median;
+	(*stack_b)->median = (*stack_b)->next->median;
+	(*stack_b)->next->median = tmp;
 	reassign_index(NULL, stack_b);
 }
 

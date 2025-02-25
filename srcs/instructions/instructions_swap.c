@@ -24,6 +24,9 @@ void	swap_a(t_dlist **stack_a, char name)
 	tmp = (*stack_a)->pos;
 	(*stack_a)->pos = (*stack_a)->next->pos;
 	(*stack_a)->next->pos = tmp;
+	tmp = (*stack_a)->median;
+	(*stack_a)->median = (*stack_a)->next->median;
+	(*stack_a)->next->median = tmp;
 	if (name == 'a')
 		ft_printf("sa\n");
 	reassign_index(stack_a, NULL);
@@ -41,6 +44,9 @@ void	swap_b(t_dlist **stack_b, char name)
 	tmp = (*stack_b)->pos;
 	(*stack_b)->pos = (*stack_b)->next->pos;
 	(*stack_b)->next->pos = tmp;
+	tmp = (*stack_b)->median;
+	(*stack_b)->median = (*stack_b)->next->median;
+	(*stack_b)->next->median = tmp;
 	if (name == 'b')
 		ft_printf("sb\n");
 	reassign_index(NULL, stack_b);
