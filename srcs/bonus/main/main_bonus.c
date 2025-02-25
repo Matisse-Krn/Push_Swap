@@ -68,7 +68,7 @@ static char	**extract_input(int argc, char **argv)
 			return (NULL);
 		input = ft_split(argv[1], ' ');
 		if (!input)
-			return (free(input), NULL);
+			return (NULL);
 	}
 	else if (argc > 2)
 	{
