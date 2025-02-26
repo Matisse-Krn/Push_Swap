@@ -63,7 +63,6 @@ void	reverse_rotate_a(t_dlist **stack_a, char name);
 void	reverse_rotate_b(t_dlist **stack_b, char name);
 void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
 
-/*Bonus : */
 int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b);
 void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab);
 void	push_a_bonus(t_dlist **stack_a, t_dlist **stack_b);
@@ -77,14 +76,6 @@ void	rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
 void	reverse_rotate_a_bonus(t_dlist **stack_a);
 void	reverse_rotate_b_bonus(t_dlist **stack_b);
 void	reverse_rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
-
-
-
-
-
-
-
-
 
 // TEMPORAIRES :
 //void test_push(t_dlist **stack_a, t_dlist **stack_b);
