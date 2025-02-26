@@ -13,9 +13,21 @@
 #include "push_swap.h"
 
 /*
- * Return 0 if no need to move, return -1 if reverse_rotate_b is needed, else
- * return 1 if rotate_b is needed
-*/
+ * Function: move_to_top
+ * ---------------------
+ * Description:
+ *   Determines the movement direction required to bring a given node
+ *   to the top of its stack.
+ *
+ * Parameters:
+ *   - t_dlist *to_move: The node that needs to be moved.
+ *   - t_dlist **stack: Pointer to the head pointer of the stack.
+ *
+ * Returns:
+ *   - 1 if the node is in the upper half (rotate is needed).
+ *   - -1 if the node is in the lower half (reverse_rotate is needed).
+ *   - 0 if the node is already at the top (no need to move) or is NULL.
+ */
 int	move_to_top(t_dlist *to_move, t_dlist **stack)
 {
 	int	len;
@@ -33,6 +45,24 @@ int	move_to_top(t_dlist *to_move, t_dlist **stack)
 	return (0);
 }
 
+/*
+ * Function: optimize_movements
+ * ----------------------------
+ * Description:
+ *   Optimizes the movement operations for two stacks based on
+ *   provided action values. If both actions are the same, a
+ *   simultaneous rotation is performed; otherwise, individual
+ *   rotations are applied.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - int action_a: Movement directive for stack A (1, -1, or 0).
+ *   - int action_b: Movement directive for stack B (1, -1, or 0).
+ *
+ * Returns:
+ *   - void.
+ */
 static void	optimize_movements(t_dlist **stack_a, t_dlist **stack_b,
 								int action_a, int action_b)
 {
@@ -58,6 +88,20 @@ static void	optimize_movements(t_dlist **stack_a, t_dlist **stack_b,
 	}
 }
 
+/*
+ * Function: find_cost_min
+ * -----------------------
+ * Description:
+ *   Searches stack B for the node with the smallest cost.
+ *   First determine the minimum cost value, then returns
+ *   the first node that matches this cost.
+ *
+ * Parameters:
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Returns:
+ *   - Pointer to the node with the minimum cost.
+ */
 static t_dlist	*find_cost_min(t_dlist **stack_b)
 {
 	t_dlist	*to_move;
@@ -77,6 +121,22 @@ static t_dlist	*find_cost_min(t_dlist **stack_b)
 	return (to_move);
 }
 
+
+/*
+ * Function: determine_next_movement
+ * ---------------------------------
+ * Description:
+ *   Determines the next movement to perform by selecting the node
+ *   in stack B with the minimum cost and calculating the movements
+ *   needed for both that node and its target in stack A.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Returns:
+ *   - void.
+ */
 void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*to_move;
@@ -91,10 +151,7 @@ void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b)
 	while (!(action_a == 0 && action_b == 0))
 	{
 		action_b = move_to_top(to_move, stack_b);
-		if (to_move->target)
-			action_a = move_to_top(to_move->target, stack_a);
-		else
-			action_a = 0;
+		action_a = move_to_top(to_move->target, stack_a);
 		optimize_movements(stack_a, stack_b, action_a, action_b);
 	}
 }
