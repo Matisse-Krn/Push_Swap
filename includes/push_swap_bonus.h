@@ -46,7 +46,6 @@ void	sort_tab(int *tab, int *sort, int len);
 void	reassign_index(t_dlist **stack_a, t_dlist **stack_b);
 int		create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len);
 int		check_if_asc_sorted_list(t_dlist *stack);
-int		check_if_desc_sorted_list(t_dlist *stack);
 int		*set_final_position(int *tab, int len, t_dlist **stack);
 
 void	push_a(t_dlist **stack_a, t_dlist **stack_b);

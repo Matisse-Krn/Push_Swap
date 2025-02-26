@@ -13,8 +13,23 @@
 #include "push_swap_bonus.h"
 
 /*
- * Return 1 if the list is sorted in ascending order, else return 0
-*/
+ * Function: check_if_asc_sorted_list
+ * ----------------------------------
+ * Description:
+ *   Checks whether the given doubly-linked list is sorted in ascending
+ *   order.
+ *
+ * Parameters:
+ *   - t_dlist *stack: Pointer to the head of the list.
+ *
+ * Behavior:
+ *   Traverses the list and compares each node's value with the next node's.
+ *   If any node has a value greater than its successor, the list is not
+ *   sorted in ascending order.
+ *
+ * Returns:
+ *   1 if the list is sorted in ascending order, 0 otherwise.
+ */
 int	check_if_asc_sorted_list(t_dlist *stack)
 {
 	t_dlist	*tmp;
@@ -23,23 +38,6 @@ int	check_if_asc_sorted_list(t_dlist *stack)
 	while (tmp && tmp->next)
 	{
 		if (tmp->value > tmp->next->value)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (1);
-}
-
-/*
- * Return 1 if the list is sorted in descending order, else return 0
-*/
-int	check_if_desc_sorted_list(t_dlist *stack)
-{
-	t_dlist	*tmp;
-
-	tmp = stack;
-	while (tmp && tmp->next)
-	{
-		if (tmp->value < tmp->next->value)
 			return (0);
 		tmp = tmp->next;
 	}
