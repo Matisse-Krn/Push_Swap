@@ -243,8 +243,8 @@ static char	**take_all_args(int argc, char **argv)
  *
  * Behavior:
  *   - If exactly one argument (besides the program name) is provided, the
- *     function uses ft_split to break
- *     the string into an array of substrings using spaces as delimiters.
+ *     function uses ft_split to break the string into an array of substrings
+ *     using spaces as delimiters.
  *   - If more than one argument is provided, it calls take_all_args to duplicate
  *     each argument into a new array.
  *   - Performs basic error checking to ensure that the input is valid.
