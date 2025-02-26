@@ -13,13 +13,25 @@
 #include "push_swap_bonus.h"
 
 /*
- * Find the real length of a number represented by a string :
- *		- "2147483647" = 10   ->   "0002147483647" = 10
- *		- "+78" = 2			  ->   "+0078" = 2
- *		- "0" = 1			  ->   -0" = 1
- * Because we use this in 'delete_surplus()' after treating the cases of "-000",
- *	  we can't have an input who 's' = "-0000" (or "+0", "-0", "+00",...)
-*/
+ * Function: real_length
+ * ---------------------
+ * Description:
+ *   Computes the effective length of a numeric string by skipping a
+ *   leading '+' sign and any leading zeros. If a '-' sign is present,
+ *   it is counted as a character.
+ *
+ * Parameters:
+ *   - char *s: The input numeric string.
+ *
+ * Behavior:
+ *   1. If the string starts with a '+', it is skipped.
+ *   2. If the string starts with a '-', it is counted and skipped.
+ *   3. Leading zeros are then skipped.
+ *   4. The remaining digits are counted to obtain the real length.
+ *
+ * Returns:
+ *   - The effective length of the number as an integer.
+ */
 int	real_length(char *s)
 {
 	int		i;
@@ -42,9 +54,24 @@ int	real_length(char *s)
 }
 
 /*
- * Return 0 if the value of the int represented by 's' is 0 
- *	  ('+000', '-0000', '+0',...), or return 1
-*/
+ * Function: str_is_zero
+ * ---------------------
+ * Description:
+ *   Determines whether the numeric string represents the value zero.
+ *   It treats strings like "+000", "-0000", or "0" as zero.
+ *
+ * Parameters:
+ *   - char *s: The input numeric string.
+ *
+ * Behavior:
+ *   1. Skips an initial '+' or '-' sign.
+ *   2. Skips all subsequent '0' characters.
+ *   3. If the end of the string is reached, the number is zero.
+ *
+ * Returns:
+ *   - 0 if the string represents zero.
+ *   - 1 otherwise.
+ */
 int	str_is_zero(char *s)
 {
 	int	i;
@@ -59,6 +86,28 @@ int	str_is_zero(char *s)
 	return (1);
 }
 
+/*
+ * Function: write_real_str
+ * ------------------------
+ * Description:
+ *   Writes a normalized version of the numeric string into the
+ *   destination buffer. It omits any unnecessary leading '+' or zeros,
+ *   while preserving a '-' sign if present.
+ *
+ * Parameters:
+ *   - char *dst: The destination buffer where the normalized string
+ *                is written.
+ *   - char *s: The original numeric string.
+ *
+ * Behavior:
+ *   1. Checks if the string begins with '+' or '-'. A '-' is kept;
+ *      a '+' is skipped.
+ *   2. Skips all leading zeros.
+ *   3. Copies the remaining digits into the destination buffer.
+ *
+ * Returns:
+ *   - This is a void function; the result is stored in dst.
+ */
 static void	write_real_str(char *dst, char *s)
 {
 	int	i;
@@ -79,13 +128,28 @@ static void	write_real_str(char *dst, char *s)
 }
 
 /*
- * Delete all superfluous char :
- *		-	"0045"	 ->  "45"
- *		-	"-0045"  ->  "-45"
- *		-	"+45"	 ->  "45"
- *		-	"+0045"  ->  "45"
- *		-	"-0"	 ->  "0"
-*/
+ * Function: delete_surplus
+ * ------------------------
+ * Description:
+ *   Removes superfluous characters from a numeric string. This
+ *   function normalizes the string by eliminating extra zeros and an
+ *   unnecessary '+' sign.
+ *
+ * Parameters:
+ *   - char *s: The input numeric string.
+ *
+ * Behavior:
+ *   1. If the string represents zero (e.g. "+000", "-0000"), allocates
+ *      a new string containing "0".
+ *   2. Otherwise, computes the real length of the normalized string.
+ *   3. Allocates a new string of the computed length.
+ *   4. Uses write_real_str() to fill the new string with the normalized
+ *      numeric value.
+ *
+ * Returns:
+ *   - A newly allocated, normalized string.
+ *   - NULL if memory allocation fails.
+ */
 char	*delete_surplus(char *s)
 {
 	int		len;
@@ -106,6 +170,27 @@ char	*delete_surplus(char *s)
 	return (dst);
 }
 
+/*
+ * Function: convert_str_to_tab
+ * ----------------------------
+ * Description:
+ *   Converts an array of numeric strings into an array of integers.
+ *   It also determines the number of elements in the input array.
+ *
+ * Parameters:
+ *   - char **s: The array of numeric strings.
+ *   - int *len: Pointer to an integer that will hold the number of
+ *               elements.
+ *
+ * Behavior:
+ *   1. Counts the number of strings in the input array and updates *len.
+ *   2. Allocates an integer array of size *len.
+ *   3. Converts each string to an integer using ft_atoi.
+ *
+ * Returns:
+ *   - A pointer to the integer array if successful.
+ *   - NULL if the input is invalid or if allocation fails.
+ */
 int	*convert_str_to_tab(char **s, int *len)
 {
 	int	i;

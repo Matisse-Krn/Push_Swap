@@ -12,6 +12,27 @@
 
 #include "push_swap_bonus.h"
 
+/*
+ * Function: exec_all_two
+ * ------------------------
+ * Description:
+ *   Executes bonus rotate instructions that are not handled by exec_all().
+ *   It compares the instruction at tab[i] against the valid bonus rotate
+ *   operations.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to stack A.
+ *   - t_dlist **stack_b: Pointer to stack B.
+ *   - char **tab: Array of instruction strings.
+ *   - int i: Index of the current instruction in tab.
+ *
+ * Behavior:
+ *   If tab[i] equals "ra\n", "rb\n", "rr\n", "rra\n", "rrb\n", or 
+ *   "rrr\n", calls the corresponding bonus rotate function.
+ *
+ * Returns:
+ *   void.
+ */
 static void	exec_all_two(t_dlist **stack_a,
 						t_dlist **stack_b,
 						char **tab, int i)
@@ -30,6 +51,27 @@ static void	exec_all_two(t_dlist **stack_a,
 		reverse_rotate_r_bonus(stack_a, stack_b);
 }
 
+/*
+ * Function: exec_all
+ * ------------------
+ * Description:
+ *   Executes all bonus instructions from the provided instruction array.
+ *   It selects the appropriate bonus operation based on each instruction.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to stack A.
+ *   - t_dlist **stack_b: Pointer to stack B.
+ *   - char **tab: Array of instruction strings.
+ *
+ * Behavior:
+ *   Iterates over the instruction array and for each instruction:
+ *     - If it matches "pa\n", "pb\n", "sa\n", "sb\n", or "ss\n", calls the
+ *       corresponding bonus push or swap function.
+ *     - Otherwise, calls exec_all_two() to handle rotate commands.
+ *
+ * Returns:
+ *   void.
+ */
 void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab)
 {
 	int	i;

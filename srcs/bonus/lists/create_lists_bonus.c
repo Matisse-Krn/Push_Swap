@@ -12,6 +12,28 @@
 
 #include "push_swap_bonus.h"
 
+/*
+ * Function: init_stack_a
+ * ------------------------
+ * Description:
+ *   Converts an integer array into a doubly-linked list (stack A) and
+ *   verifies whether the list is already sorted in ascending order.
+ *
+ * Parameters:
+ *   - int *tab: The input integer array.
+ *   - int len: The number of elements in the array.
+ *
+ * Behavior:
+ *   1. Uses tab_to_list to convert the array into a linked list.
+ *   2. Checks if the list is sorted in ascending order via
+ *      check_if_asc_sorted_list.
+ *   3. If the list is sorted, frees the list and the array, then returns NULL,
+ *      signaling that no further processing is needed.
+ *
+ * Returns:
+ *   A pointer to the head of the linked list (stack A) if unsorted, or NULL if
+ *   the list is already sorted.
+ */
 static t_dlist	*init_stack_a(int *tab, int len)
 {
 	t_dlist	*stack_a;
@@ -27,6 +49,29 @@ static t_dlist	*init_stack_a(int *tab, int len)
 	return (stack_a);
 }
 
+/*
+ * Function: set_median
+ * ---------------------
+ * Description:
+ *   Identifies and marks the median element in stack A by setting its median
+ *   flag to 1. The median is determined from a sorted array of integers.
+ *
+ * Parameters:
+ *   - int *sort: A sorted array of integers.
+ *   - int len: The number of elements in the sorted array.
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *
+ * Behavior:
+ *   1. Validates inputs; if stack_a or sort is NULL or len is less than 2,
+ *		does nothing.
+ *   2. Computes the median index as len/2.
+ *   3. Traverses stack A until finding the node whose value matches the median
+ *      value from the sorted array.
+ *   4. Sets the median field of that node to 1.
+ *
+ * Returns:
+ *   void.
+ */
 static void	set_median(int *sort, int len, t_dlist **stack_a)
 {
 	int		i;
@@ -43,6 +88,34 @@ static void	set_median(int *sort, int len, t_dlist **stack_a)
 	tmp->median = 1;
 }
 
+/*
+ * Function: create_lists
+ * -----------------------
+ * Description:
+ *   Initializes the two stacks for the bonus checker by converting an
+ *   integer array into a linked list (stack A) and setting up position and
+ *   median properties.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - int *tab: The input integer array.
+ *   - int len: The number of elements in the array.
+ *
+ * Behavior:
+ *   1. Calls init_stack_a to convert the array into a linked list; if the list
+ *		is already sorted, init_stack_a frees resources and returns NULL.
+ *   2. If stack A is NULL, frees stack B and returns an error code.
+ *   3. Allocates a temporary array 'sort' to store a copy of the integers.
+ *   4. Uses sort_tab to copy and sort the integer array into 'sort'.
+ *   5. Calls set_final_position to assign a final position index to each node in
+ *      stack A based on the sorted order.
+ *   6. Calls set_median to mark the median element in stack A.
+ *   7. Frees the temporary sorted array and returns 0 to indicate success.
+ *
+ * Returns:
+ *   0 if the lists are created successfully, or 1 if an error occurs.
+ */
 int	create_lists(t_dlist **stack_a, t_dlist **stack_b, int *tab, int len)
 {
 	int		*sort;

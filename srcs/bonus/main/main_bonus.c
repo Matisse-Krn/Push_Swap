@@ -13,8 +13,24 @@
 #include "push_swap_bonus.h"
 
 /*
- * Free all arrays in the array of arrays, to prevent leaks
-*/
+ * Function: free_str
+ * ------------------
+ * Description:
+ *   Frees a NULL-terminated array of strings. Each string is freed,
+ *   its pointer set to NULL, and finally the array pointer is freed.
+ *
+ * Parameters:
+ *   - char **tabtab: Pointer to a NULL-terminated array of strings.
+ *
+ * Behavior:
+ *   1. If the input (tabtab) is NULL, does nothing.
+ *   2. Iterates through the array, freeing each string and setting it
+ *      to NULL.
+ *   3. Frees the array pointer and sets it to NULL.
+ *
+ * Returns:
+ *   - void.
+ */
 void	free_str(char **tabtab)
 {
 	int	i;
@@ -31,6 +47,29 @@ void	free_str(char **tabtab)
 	tabtab = NULL;
 }
 
+/*
+ * Function: take_all_args
+ * -----------------------
+ * Description:
+ *   Handles the case where arguments are passed one by one. It
+ *   duplicates each argument (except the program name) into a new
+ *   array of strings.
+ *
+ * Parameters:
+ *   - int argc: Count of command line arguments.
+ *   - char **argv: Array of command line argument strings.
+ *
+ * Behavior:
+ *   1. Allocates an array of char pointers using ft_calloc.
+ *   2. Iterates over argv starting from argv[1].
+ *   3. If an argument is missing or empty, frees allocated memory and
+ *      returns NULL.
+ *   4. Duplicates each argument with ft_strdup.
+ *   5. Returns a NULL-terminated array of strings.
+ *
+ * Returns:
+ *   - Pointer to the new array of strings, or NULL on error.
+ */
 static char	**take_all_args(int argc, char **argv)
 {
 	char	**input;
@@ -53,11 +92,33 @@ static char	**take_all_args(int argc, char **argv)
 }
 
 /*
- * Determines whether elements are passed :
- *	  in a single string : `./push_swap “54 32 87"`
- *	  one by one : `./push_swap 54 32 87`
- * Extract each element and assign it to an array of arrays 'input'
-*/
+ * Function: extract_input
+ * -------------------------
+ * Description:
+ *   Extracts the input numbers from the command-line arguments.
+ *   Supports two formats:
+ *     1. A single string containing all numbers separated by spaces
+ *        (e.g., "./push_swap '54 32 87'").
+ *     2. Multiple arguments provided one by one (e.g., "./push_swap 54 32 87").
+ *
+ * Parameters:
+ *   - int argc: The total number of command-line arguments.
+ *   - char **argv: The array of command-line arguments.
+ *
+ * Behavior:
+ *   - If exactly one argument (besides the program name) is provided, the
+ *     function uses ft_split to break the string into an array of substrings
+ *     using spaces as delimiters.
+ *   - If more than one argument is provided, it calls take_all_args to duplicate
+ *     each argument into a new array.
+ *   - Performs basic error checking to ensure that the input is valid.
+ *
+ * Returns:
+ *   - A pointer to a newly allocated, NULL-terminated array of strings
+ *     representing the extracted input.
+ *   - Returns NULL if no valid input is provided or if an error occurs
+ *     during extraction.
+ */
 static char	**extract_input(int argc, char **argv)
 {
 	char	**input;
@@ -82,11 +143,31 @@ static char	**extract_input(int argc, char **argv)
 }
 
 /*
- * Calls 'extract_input()' to extract the 'input' of all elements,
- * Calls the 'parsing_check()' function to perform all input
- * checks/verifications.
- * Convert the input string into a array of int
-*/
+ * Function: main
+ * --------------
+ * Description:
+ *   Entry point for the bonus version of the push_swap program.
+ *   Extracts and validates input, converts it to an integer array,
+ *   creates the lists for sorting, and calls checker_instructions.
+ *
+ * Parameters:
+ *   - int argc: Number of command line arguments.
+ *   - char **argv: Array of command line argument strings.
+ *
+ * Behavior:
+ *   1. Extracts input using extract_input.
+ *   2. Validates the input with parsing_check.
+ *   3. Converts the input strings into an integer array using
+ *      convert_str_to_tab.
+ *   4. Frees the input strings.
+ *   5. Creates lists for stack A and stack B using create_lists.
+ *   6. Call checker_instructions to listen to user instructions
+ *		and check their logical validity.
+ *   7. Frees both lists before exiting.
+ *
+ * Returns:
+ *   - 0 on success, or 1 if an error occurs.
+ */
 int	main(int argc, char **argv)
 {
 	char	**input;

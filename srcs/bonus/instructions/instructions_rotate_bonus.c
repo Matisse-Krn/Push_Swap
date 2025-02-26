@@ -12,6 +12,25 @@
 
 #include "push_swap_bonus.h"
 
+/*
+ * Function: rotate_a_bonus
+ * ------------------------
+ * Description:
+ *   Rotates stack A by moving the first node to the end of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *
+ * Behavior:
+ *   1. If stack A is empty or contains only one node, does nothing.
+ *   2. Stores the first node in 'last' and locates the last node in 'init_last'.
+ *   3. Updates the head pointer to the second node.
+ *   4. Moves the former first node to the end of the list and updates pointers.
+ *   5. Calls reassign_index() to update the indices in stack A.
+ *
+ * Returns:
+ *   void.
+ */
 void	rotate_a_bonus(t_dlist **stack_a)
 {
 	t_dlist	*init_last;
@@ -31,6 +50,25 @@ void	rotate_a_bonus(t_dlist **stack_a)
 	reassign_index(stack_a, NULL);
 }
 
+/*
+ * Function: rotate_b_bonus
+ * ------------------------
+ * Description:
+ *   Rotates stack B by moving the first node to the end of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Behavior:
+ *   1. If stack B is empty or contains only one node, does nothing.
+ *   2. Stores the first node in 'last' and locates the last node in 'init_last'.
+ *   3. Updates the head pointer to the second node.
+ *   4. Moves the former first node to the end of the list and updates pointers.
+ *   5. Calls reassign_index() to update the indices in stack B.
+ *
+ * Returns:
+ *   void.
+ */
 void	rotate_b_bonus(t_dlist **stack_b)
 {
 	t_dlist	*init_last;
@@ -50,6 +88,22 @@ void	rotate_b_bonus(t_dlist **stack_b)
 	reassign_index(NULL, stack_b);
 }
 
+/*
+ * Function: rotate_r_bonus
+ * ------------------------
+ * Description:
+ *   Rotates both stack A and stack B simultaneously.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Behavior:
+ *   Calls rotate_a_bonus() for stack A and rotate_b_bonus() for stack B.
+ *
+ * Returns:
+ *   void.
+ */
 void	rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b)
 {
 	rotate_a_bonus(stack_a);
