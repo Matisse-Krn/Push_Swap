@@ -38,11 +38,9 @@ void	free_str(char **tabtab);
 
 t_dlist	*dlst_new(int value, int index, char name);
 void	tab_to_list(t_dlist **stack_a, int *tab, int len);
-//t_dlist	*init_stack_a(int *tab, int len);
 void	dlst_add_last(t_dlist **dlst, t_dlist *new);
 void	free_list(t_dlist *head);
 int		dlst_size(t_dlist **stack);
-//int		*sort_tab(int *tab, int len);
 void	sort_tab(int *tab, int *sort, int len);
 
 void	reassign_index(t_dlist **stack_a, t_dlist **stack_b);
@@ -71,8 +69,8 @@ void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_sort(t_dlist **stack_a);
 
 // TEMPORAIRES :
-//void test_push(t_dlist **stack_a, t_dlist **stack_b);
-//void	print_stack(t_dlist *stack, char name);
-//void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
-
+/*void test_push(t_dlist **stack_a, t_dlist **stack_b);
+void	print_stack(t_dlist *stack, char name);
+void	print_stacks(t_dlist **stack_a, t_dlist **stack_b);
+*/
 #endif
