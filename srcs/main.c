@@ -152,21 +152,20 @@
  * Function: free_str
  * ------------------
  * Description:
- *   Frees a NULL-terminated array of strings. This function iterates over
- *   each string in the given array, frees each individual string, and then
- *   frees the array pointer itself.
+ *   Frees a NULL-terminated array of strings. Each string is freed,
+ *   its pointer set to NULL, and finally the array pointer is freed.
  *
  * Parameters:
- *   - char **tabtab: A pointer to a NULL-terminated array of strings.
+ *   - char **tabtab: Pointer to a NULL-terminated array of strings.
  *
  * Behavior:
- *   - If the input pointer is NULL, the function does nothing.
- *   - Otherwise, it loops through each element until it encounters a NULL
- *     pointer, freeing each string.
- *   - Finally, it frees the pointer to the array itself.
+ *   1. If the input (tabtab) is NULL, does nothing.
+ *   2. Iterates through the array, freeing each string and setting it
+ *      to NULL.
+ *   3. Frees the array pointer and sets it to NULL.
  *
  * Returns:
- *   - void. (The function does not return any value.)
+ *   - void.
  */
 void	free_str(char **tabtab)
 {
@@ -184,6 +183,29 @@ void	free_str(char **tabtab)
 	tabtab = NULL;
 }
 
+/*
+ * Function: take_all_args
+ * -----------------------
+ * Description:
+ *   Handles the case where arguments are passed one by one. It
+ *   duplicates each argument (except the program name) into a new
+ *   array of strings.
+ *
+ * Parameters:
+ *   - int argc: Count of command line arguments.
+ *   - char **argv: Array of command line argument strings.
+ *
+ * Behavior:
+ *   1. Allocates an array of char pointers using ft_calloc.
+ *   2. Iterates over argv starting from argv[1].
+ *   3. If an argument is missing or empty, frees allocated memory and
+ *      returns NULL.
+ *   4. Duplicates each argument with ft_strdup.
+ *   5. Returns a NULL-terminated array of strings.
+ *
+ * Returns:
+ *   - Pointer to the new array of strings, or NULL on error.
+ */
 static char	**take_all_args(int argc, char **argv)
 {
 	char	**input;
