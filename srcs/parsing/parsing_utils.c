@@ -87,27 +87,26 @@ int	str_is_zero(char *s)
 }
 
 /*
- * Function: delete_surplus
+ * Function: write_real_str
  * ------------------------
  * Description:
- *   Removes superfluous characters from a numeric string. This
- *   function normalizes the string by eliminating extra zeros and an
- *   unnecessary '+' sign.
+ *   Writes a normalized version of the numeric string into the
+ *   destination buffer. It omits any unnecessary leading '+' or zeros,
+ *   while preserving a '-' sign if present.
  *
  * Parameters:
- *   - char *s: The input numeric string.
+ *   - char *dst: The destination buffer where the normalized string
+ *                is written.
+ *   - char *s: The original numeric string.
  *
  * Behavior:
- *   1. If the string represents zero (e.g. "+000", "-0000"), allocates
- *      a new string containing "0".
- *   2. Otherwise, computes the real length of the normalized string.
- *   3. Allocates a new string of the computed length.
- *   4. Uses write_real_str() to fill the new string with the normalized
- *      numeric value.
+ *   1. Checks if the string begins with '+' or '-'. A '-' is kept;
+ *      a '+' is skipped.
+ *   2. Skips all leading zeros.
+ *   3. Copies the remaining digits into the destination buffer.
  *
  * Returns:
- *   - A newly allocated, normalized string.
- *   - NULL if memory allocation fails.
+ *   - This is a void function; the result is stored in dst.
  */
 static void	write_real_str(char *dst, char *s)
 {
