@@ -16,24 +16,31 @@
  * Function: push_a
  * ----------------
  * Description:
- *   Moves the top element from stack_b to stack_a.
- *   If stack_b is empty, the function returns immediately.
+ *   Moves the top element from stack_b to the top of stack_a.
+ *   If stack_b is empty, the function does nothing.
+ *   The function removes the first node from stack_b and inserts it
+ *   at the beginning of stack_a. If stack_a is empty, the moved node
+ *   becomes the only element; otherwise, it is linked before the
+ *   current head. After insertion, indices in both stacks are updated,
+ *   and the operation "pa" is printed.
  *
  * Parameters:
  *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
  *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
  *
  * Behavior:
- *   1. Checks that stack_b is non-empty.
- *   2. Saves the top element of stack_b in a temporary node.
- *   3. Advances stack_b to its next node and resets its prev pointer.
- *   4. Inserts the temporary node at the beginning of stack_a.
- *   5. Sets the moved node's name to 'a'.
- *   6. Reassigns indices for both stacks.
- *   7. Prints "pa" to indicate the push operation.
+ *   1. If stack_b is empty, returns immediately.
+ *   2. Saves the top node of stack_b in a temporary variable.
+ *   3. Advances stack_b's head to the next node and, if it exists,
+ *      resets its previous pointer.
+ *   4. Inserts the saved node at the top of stack_a:
+ *        - If stack_a is empty, initializes it with the node.
+ *        - Otherwise, links the node before the current head.
+ *   5. Reassigns indices in both stacks.
+ *   6. Prints "pa" to indicate the push operation.
  *
  * Returns:
- *   - void.
+ *   void.
  */
 void	push_a(t_dlist **stack_a, t_dlist **stack_b)
 {
@@ -45,11 +52,20 @@ void	push_a(t_dlist **stack_a, t_dlist **stack_b)
 	*stack_b = (*stack_b)->next;
 	if (*stack_b)
 		(*stack_b)->prev = NULL;
-	tmp->next = *stack_a;
-	if (*stack_a)
+	if (!(*stack_a))
+	{
+		tmp->next = NULL;
+		tmp->prev = NULL;
+		tmp->name = 'a';
+		*stack_a = tmp;
+	}
+	else
+	{
+		tmp->next = *stack_a;
 		(*stack_a)->prev = tmp;
-	*stack_a = tmp;
-	(*stack_a)->name = 'a';
+		*stack_a = tmp;
+		(*stack_a)->name = 'a';
+	}
 	reassign_index(stack_a, stack_b);
 	ft_printf("pa\n");
 }
