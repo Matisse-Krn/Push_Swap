@@ -176,8 +176,12 @@ void	free_str(char **tabtab)
 		return ;
 	i = -1;
 	while (tabtab[++i])
+	{
 		free(tabtab[i]);
+		tabtab[i] = NULL;
+	}
 	free(tabtab);
+	tabtab = NULL;
 }
 
 static char	**take_all_args(int argc, char **argv)
