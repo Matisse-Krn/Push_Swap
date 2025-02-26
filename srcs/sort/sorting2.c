@@ -121,7 +121,6 @@ static t_dlist	*find_cost_min(t_dlist **stack_b)
 	return (to_move);
 }
 
-
 /*
  * Function: determine_next_movement
  * ---------------------------------
