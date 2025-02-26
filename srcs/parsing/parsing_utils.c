@@ -150,7 +150,6 @@ static void	write_real_str(char *dst, char *s)
  *   - A newly allocated, normalized string.
  *   - NULL if memory allocation fails.
  */
-
 char	*delete_surplus(char *s)
 {
 	int		len;
