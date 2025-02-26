@@ -70,29 +70,6 @@ void	set_cost_to_top(t_dlist **stack_a, t_dlist **stack_b);
 void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_sort(t_dlist **stack_a);
 
-/*Bonus : */
-int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b);
-void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab);
-void	push_a_bonus(t_dlist **stack_a, t_dlist **stack_b);
-void	push_b_bonus(t_dlist **stack_a, t_dlist **stack_b);
-void	swap_a_bonus(t_dlist **stack_a);
-void	swap_b_bonus(t_dlist **stack_b);
-void	swap_s_bonus(t_dlist **stack_a, t_dlist **stack_b);
-void	rotate_a_bonus(t_dlist **stack_a);
-void	rotate_b_bonus(t_dlist **stack_b);
-void	rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
-void	reverse_rotate_a_bonus(t_dlist **stack_a);
-void	reverse_rotate_b_bonus(t_dlist **stack_b);
-void	reverse_rotate_r_bonus(t_dlist **stack_a, t_dlist **stack_b);
-
-
-
-
-
-
-
-
-
 // TEMPORAIRES :
 //void test_push(t_dlist **stack_a, t_dlist **stack_b);
 //void	print_stack(t_dlist *stack, char name);
