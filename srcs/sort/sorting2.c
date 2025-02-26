@@ -156,6 +156,25 @@ void	determine_next_movement(t_dlist **stack_a, t_dlist **stack_b)
 	}
 }
 
+/*
+ * Function: finish_sort
+ * ---------------------
+ * Description:
+ *   Finalizes the sorting of stack A by rotating it until the entire
+ *   stack is in ascending order.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *
+ * Behavior:
+ *   1. Traverses stack A until a disruption in ascending order is found.
+ *   2. Determines if the rotation should be performed forwards or
+ *      backwards based on the node's index.
+ *   3. Rotates stack A accordingly to complete the sort.
+ *
+ * Returns:
+ *   - void.
+ */
 void	finish_sort(t_dlist **stack_a)
 {
 	t_dlist	*tmp;

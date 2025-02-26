@@ -12,6 +12,30 @@
 
 #include "push_swap.h"
 
+/*
+ * Function: rotate_a
+ * ------------------
+ * Description:
+ *   Rotates stack_a by moving the first node to the end of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - char name: Operation identifier. If 'a', prints "ra".
+ *
+ * Behavior:
+ *   1. If stack_a is empty or has only one node, does nothing.
+ *   2. Stores the first node in 'last' and finds the last node in 
+ *      'init_last'.
+ *   3. Updates the head pointer to the second node.
+ *   4. Sets the former first node's 'prev' to the last node and its 
+ *      'next' to NULL.
+ *   5. Updates the old last node's 'next' to point to the moved node.
+ *   6. If name equals 'a', prints "ra".
+ *   7. Reassigns indices for stack_a.
+ *
+ * Returns:
+ *   - void.
+ */
 void	rotate_a(t_dlist **stack_a, char name)
 {
 	t_dlist	*init_last;
@@ -33,6 +57,30 @@ void	rotate_a(t_dlist **stack_a, char name)
 	reassign_index(stack_a, NULL);
 }
 
+/*
+ * Function: rotate_b
+ * ------------------
+ * Description:
+ *   Rotates stack_b by moving the first node to the end of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - char name: Operation identifier. If 'b', prints "rb".
+ *
+ * Behavior:
+ *   1. If stack_b is empty or has a single node, does nothing.
+ *   2. Stores the first node in 'last' and locates the last node in 
+ *      'init_last'.
+ *   3. Updates the head pointer to the second node.
+ *   4. Sets the former first node's 'prev' to the last node and its 
+ *      'next' to NULL.
+ *   5. Updates the old last node's 'next' to point to the moved node.
+ *   6. If name equals 'b', prints "rb".
+ *   7. Reassigns indices for stack_b.
+ *
+ * Returns:
+ *   - void.
+ */
 void	rotate_b(t_dlist **stack_b, char name)
 {
 	t_dlist	*init_last;
@@ -54,6 +102,25 @@ void	rotate_b(t_dlist **stack_b, char name)
 	reassign_index(NULL, stack_b);
 }
 
+/*
+ * Function: rotate_r
+ * ------------------
+ * Description:
+ *   Rotates both stack_a and stack_b simultaneously.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - char name: Operation identifier. If 'r', performs both rotations.
+ *
+ * Behavior:
+ *   1. If name equals 'r', calls rotate_a() and rotate_b() for the two
+ *      stacks.
+ *   2. Prints "rr" to indicate the dual rotation.
+ *
+ * Returns:
+ *   - void.
+ */
 void	rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name)
 {
 	if (name == 'r')

@@ -12,6 +12,29 @@
 
 #include "push_swap.h"
 
+/*
+ * Function: push_a
+ * ----------------
+ * Description:
+ *   Moves the top element from stack_b to stack_a.
+ *   If stack_b is empty, the function returns immediately.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Behavior:
+ *   1. Checks that stack_b is non-empty.
+ *   2. Saves the top element of stack_b in a temporary node.
+ *   3. Advances stack_b to its next node and resets its prev pointer.
+ *   4. Inserts the temporary node at the beginning of stack_a.
+ *   5. Sets the moved node's name to 'a'.
+ *   6. Reassigns indices for both stacks.
+ *   7. Prints "pa" to indicate the push operation.
+ *
+ * Returns:
+ *   - void.
+ */
 void	push_a(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*tmp;
@@ -31,6 +54,34 @@ void	push_a(t_dlist **stack_a, t_dlist **stack_b)
 	ft_printf("pa\n");
 }
 
+/*
+ * Function: push_b
+ * ----------------
+ * Description:
+ *   Moves the top element from stack_a to stack_b.
+ *   If stack_a is empty, the function returns immediately.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Behavior:
+ *   1. Checks that stack_a is non-empty.
+ *   2. Saves the top element of stack_a in a temporary node.
+ *   3. Advances stack_a to its next node and resets its prev pointer.
+ *   4. If stack_b is empty:
+ *        a. Sets the temporary node's next and prev to NULL.
+ *        b. Sets its name to 'b' and assigns it as the head of stack_b.
+ *      Otherwise:
+ *        a. Inserts the temporary node at the beginning of stack_b.
+ *        b. Updates the old head's prev pointer.
+ *        c. Sets the moved node's name to 'b'.
+ *   5. Reassigns indices for both stacks.
+ *   6. Prints "pb" to indicate the push operation.
+ *
+ * Returns:
+ *   - void.
+ */
 void	push_b(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*tmp;

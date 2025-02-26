@@ -12,6 +12,33 @@
 
 #include "push_swap.h"
 
+/*
+ * Function: reverse_list
+ * ------------------------
+ * Description:
+ *   Reverses or sorts a list using a simple algorithm that varies based
+ *   on the number of elements.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head of stack A.
+ *   - t_dlist **stack_b: Pointer to the head of stack B.
+ *   - int len: The number of elements in stack A.
+ *
+ * Behavior:
+ *   1. If there are exactly 2 elements, it swaps the two nodes.
+ *
+ *   2. If there are exactly 3 elements, it swaps the first two nodes and
+ *      then performs a reverse rotation on stack A.
+ *
+ *   3. For lists with more than 3 elements:
+ *      a. It pushes all but one element from stack A to stack B.
+ *      b. Then, it reverse rotates stack B and pushes each element back
+ *         to stack A.
+ *      c. Finally, it performs one more reverse rotation on stack A.
+ *
+ * Returns:
+ *   - void.
+ */
 void	reverse_list(t_dlist **stack_a, t_dlist **stack_b, int len)
 {
 	int	i;

@@ -12,6 +12,29 @@
 
 #include "push_swap.h"
 
+/*
+ * Function: reverse_rotate_a
+ * --------------------------
+ * Description:
+ *   Performs a reverse rotation on stack_a by moving the last element
+ *   to the front of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - char name: Identifier; if 'a', prints "rra".
+ *
+ * Behavior:
+ *   1. If stack_a is empty or has a single element, does nothing.
+ *   2. Traverses the list to find the last node.
+ *   3. Detaches the last node from its previous position.
+ *   4. Inserts it at the beginning of the list.
+ *   5. Updates pointers of the new second node.
+ *   6. If name is 'a', prints the command "rra".
+ *   7. Reassigns indices for stack_a.
+ *
+ * Returns:
+ *   - void.
+ */
 void	reverse_rotate_a(t_dlist **stack_a, char name)
 {
 	t_dlist	*first;
@@ -31,6 +54,29 @@ void	reverse_rotate_a(t_dlist **stack_a, char name)
 	reassign_index(stack_a, NULL);
 }
 
+/*
+ * Function: reverse_rotate_b
+ * --------------------------
+ * Description:
+ *   Performs a reverse rotation on stack_b by moving the last element
+ *   to the front of the list.
+ *
+ * Parameters:
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - char name: Identifier; if 'b', prints "rrb".
+ *
+ * Behavior:
+ *   1. If stack_b is empty or has only one element, does nothing.
+ *   2. Traverses the list to find the last node.
+ *   3. Detaches the last node from its current position.
+ *   4. Inserts it at the beginning of the list.
+ *   5. Updates the previous pointer of the new second node.
+ *   6. If name is 'b', prints the command "rrb".
+ *   7. Reassigns indices for stack_b.
+ *
+ * Returns:
+ *   - void.
+ */
 void	reverse_rotate_b(t_dlist **stack_b, char name)
 {
 	t_dlist	*first;
@@ -50,6 +96,25 @@ void	reverse_rotate_b(t_dlist **stack_b, char name)
 	reassign_index(NULL, stack_b);
 }
 
+/*
+ * Function: reverse_rotate_r
+ * --------------------------
+ * Description:
+ *   Performs a reverse rotation on both stack_a and stack_b.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *   - char name: Identifier; if 'r', performs both rotations.
+ *
+ * Behavior:
+ *   1. If name is 'r', calls reverse_rotate_a() on stack_a and
+ *      reverse_rotate_b() on stack_b.
+ *   2. Prints the command "rrr" after both rotations.
+ *
+ * Returns:
+ *   - void.
+ */
 void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name)
 {
 	if (name == 'r')

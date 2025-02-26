@@ -12,6 +12,20 @@
 
 #include "push_swap.h"
 
+/*
+ * Function: set_final_cost
+ * ------------------------
+ * Description:
+ *   Updates the cost of each node in stack_b by adding the cost
+ *   of its target node. It traverses stack_b and, for each node,
+ *   accumulates its own cost with the cost from its target.
+ *
+ * Parameters:
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Returns:
+ *   - void.
+ */
 static void	set_final_cost(t_dlist **stack_b)
 {
 	t_dlist	*tmp;
@@ -25,18 +39,27 @@ static void	set_final_cost(t_dlist **stack_b)
 }
 
 /*
- * - Pour chaque element des deux stacks :
- * - Si l'index de l'element actuel indique que l'element se trouve dans la
- * "premiere moitie" de la liste, alors on considere que :
- *		- Son cout = son index :
- *			Le nombre de fois ou il faudra 'rotate_()') la stack vers le haut
- *			pour qu'il revienne en tete de liste);
- * 
- * - Sinon (si il est dans la deuxieme moitie de la liste), on considere que :
- *		- Son cout = [la taille totale de sa stack] - [son index] :
- *			Le nombre de fois ou il faudra 'reverse_rotate_()' la stack vers
- *			le bas pour qu'il revienne en tete de liste);
-*/
+ * Function: set_cost_to_top
+ * -------------------------
+ * Description:
+ *   Computes and sets a "cost" for nodes in both stack_a and stack_b.
+ *   The cost represents the number of moves needed to bring a node
+ *   to the top of its respective stack.
+ *
+ *   For each node in stack_b, if its index is less than or equal to half
+ *   the size of stack_b, its cost is set to its index; otherwise, the cost
+ *   is set to (len_b - index). The same logic applies for stack_a.
+ *
+ *   Finally, set_final_cost() is called to add the target's cost to each
+ *   node in stack_b.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Returns:
+ *   - void.
+ */
 void	set_cost_to_top(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*tmp;
@@ -66,6 +89,23 @@ void	set_cost_to_top(t_dlist **stack_a, t_dlist **stack_b)
 	set_final_cost(stack_b);
 }
 
+/*
+ * Function: find_minimum_target
+ * -----------------------------
+ * Description:
+ *   Searches through stack_a to find the node with the smallest value.
+ *   This node is used as the target for a node in stack_b when no node
+ *   in stack_a has a value greater than that node.
+ *
+ *   The function first determines the minimum value in stack_a, then
+ *   returns the node that holds this minimum value.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *
+ * Returns:
+ *   - Pointer to the node in stack_a with the minimum value.
+ */
 static t_dlist	*find_minimum_target(t_dlist **stack_a)
 {
 	t_dlist	*tmp;
@@ -85,6 +125,25 @@ static t_dlist	*find_minimum_target(t_dlist **stack_a)
 	return (tmp);
 }
 
+/*
+ * Function: set_target
+ * --------------------
+ * Description:
+ *   Assigns a target node from stack_a to each node in stack_b.
+ *   For each node in stack_b, it looks for the node in stack_a with the
+ *   smallest value that is greater than the current node's value.
+ *
+ *   If no such node exists (i.e., the node's value is greater than all
+ *   nodes in stack_a), the function assigns the node with the minimum value
+ *   from stack_a as the target.
+ *
+ * Parameters:
+ *   - t_dlist **stack_a: Pointer to the head pointer of stack A.
+ *   - t_dlist **stack_b: Pointer to the head pointer of stack B.
+ *
+ * Returns:
+ *   - void.
+ */
 void	set_target(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*to_move;
