@@ -143,19 +143,8 @@
 -  DONE :
 
 
-
-		- ✅ Rename 'tmp.c' file into 'print_stacks.c', and add it in 'srcs/lists/' if
-		  needed to be used during the correction;
-
-		- ✅ Create 'srcs/lists/', 'srcs/bonus/lists', and 'srcs/bonus/main/'
-			 directories to better organize the sources files;
-
-		- ✅ Clear render directory;
-		
-		- ✅ Archiving previous fonctionnal version (with testers and all project files)
-			 in 'Versions/V1/' directory;
-
-		- ✅ Add an explanatory comment above each function...!
+		- ✅ Update explanatory comments for 'init_stack_a()', 'exec_and_check()', 
+		  'checker_instructions()', 'exec_all()', 'exec_all_two()';
 
 
 - TODO :
@@ -163,8 +152,6 @@
 
 		- ❓ Create a visualizer for the bonus part...?
 
-		- ☢️  Clone the current repo into the vogsphere repo !
-		
 		- Delete this file ('Done - Todo') from the final render directory !
 		
 		- ☢️  Follow the 'check_list_before_push' !

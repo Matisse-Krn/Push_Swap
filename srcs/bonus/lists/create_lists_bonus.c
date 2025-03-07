@@ -16,36 +16,23 @@
  * Function: init_stack_a
  * ------------------------
  * Description:
- *   Converts an integer array into a doubly-linked list (stack A) and
- *   verifies whether the list is already sorted in ascending order.
+ *   Converts an integer array into a doubly-linked list (stack A).
  *
  * Parameters:
  *   - int *tab: The input integer array.
  *   - int len: The number of elements in the array.
  *
  * Behavior:
- *   1. Uses tab_to_list to convert the array into a linked list.
- *   2. Checks if the list is sorted in ascending order via
- *      check_if_asc_sorted_list.
- *   3. If the list is sorted, frees the list and the array, then returns NULL,
- *      signaling that no further processing is needed.
+ *   Uses tab_to_list to convert the array into a linked list.
  *
  * Returns:
- *   A pointer to the head of the linked list (stack A) if unsorted, or NULL if
- *   the list is already sorted.
+ *   A pointer to the head of the linked list (stack A).
  */
 static t_dlist	*init_stack_a(int *tab, int len)
 {
 	t_dlist	*stack_a;
 
 	tab_to_list(&stack_a, tab, len);
-	if (check_if_asc_sorted_list(stack_a) == 1)
-	{
-		free_list(stack_a);
-		stack_a = NULL;
-		free(tab);
-		return (NULL);
-	}
 	return (stack_a);
 }
 

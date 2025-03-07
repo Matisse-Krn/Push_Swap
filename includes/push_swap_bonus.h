@@ -61,7 +61,7 @@ void	reverse_rotate_b(t_dlist **stack_b, char name);
 void	reverse_rotate_r(t_dlist **stack_a, t_dlist **stack_b, char name);
 
 int		checker_instructions(t_dlist **stack_a, t_dlist **stack_b);
-void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab);
+int	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab);
 void	push_a_bonus(t_dlist **stack_a, t_dlist **stack_b);
 void	push_b_bonus(t_dlist **stack_a, t_dlist **stack_b);
 void	swap_a_bonus(t_dlist **stack_a);

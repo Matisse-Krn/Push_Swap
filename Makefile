@@ -22,7 +22,7 @@ LIBPATH 		= -Llibft
 
 LIBNAME 		= -lft
 
-SRC				= $(addprefix srcs/, \
+SRC				= $(addprefix srcs/mandatory/, \
 				  main.c \
 				  parsing/parsing.c \
 				  parsing/parsing_utils.c \

@@ -103,38 +103,15 @@
 		  instructions in a series of 500 elements! 
 			
 			
-	- Performance v0 (WITHOUT 'finish_sort()' optimization), across 10,000
-	  test series:
-		- For 500 numbers:
-			- median at 5608 instructions;
-			- worst case at 6215 instructions;
-			- best case at 5048 instructions;
-
-		- For 100 numbers:
-			- median at 634 instructions;
-			- worst case at 743 instructions;
-			- best case at 527 instructions;
-
-		- For 5 numbers:
-			- median at 10 instructions;
-			- worst case at 13 instructions;
-			- best case at 0 instruction;
-
-		- For 3 numbers:
-			- median at 2 instructions;
-			- worst case at 3 instructions;
-			- best case at 0 instruction;		
-	
-	
-	- Performance v1 (WITH 'finish_sort()' optimization):
-		- For 500 numbers (out of 10,000 series):
-			- median at 4783 instructions;
-			- worst case at 5260 instructions;
-			- best case at 4278 instructions;
+	- Performances:
+		- For 500 numbers (out of 15,000 series):
+			- median at 4785 instructions;
+			- worst case at 5241 instructions;
+			- best case at 4307 instructions;
 
 		- For 100 numbers (out of 500,000 series):
 			- median at 594 instructions;
-			- worst case at 700 instructions;
+			- worst case at 692 instructions;
 			- best case at 485 instructions;
 
 		- For 5 numbers (out of 100,000 series):

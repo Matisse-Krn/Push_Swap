@@ -27,13 +27,15 @@
  *   - int i: Index of the current instruction in tab.
  *
  * Behavior:
- *   If tab[i] equals "ra\n", "rb\n", "rr\n", "rra\n", "rrb\n", or 
- *   "rrr\n", calls the corresponding bonus rotate function.
+ *   1. If tab[i] matches a valid rotation or reverse rotation instruction,
+ *      calls the corresponding function.
+ *   2. If the instruction is unrecognized, prints "Error" and returns 1.
  *
  * Returns:
- *   void.
+ *   - 1 on Error
+ *   - 0 on success
  */
-static void	exec_all_two(t_dlist **stack_a,
+static int	exec_all_two(t_dlist **stack_a,
 						t_dlist **stack_b,
 						char **tab, int i)
 {
@@ -49,14 +51,18 @@ static void	exec_all_two(t_dlist **stack_a,
 		reverse_rotate_b_bonus(stack_b);
 	else if (!ft_strcmp(tab[i], "rrr\n"))
 		reverse_rotate_r_bonus(stack_a, stack_b);
+	else
+		return (ft_putstr_fd("Error\n", 2), 1);
+	return (0);
 }
 
 /*
  * Function: exec_all
  * ------------------
  * Description:
- *   Executes all bonus instructions from the provided instruction array.
- *   It selects the appropriate bonus operation based on each instruction.
+ *   Executes all instructions in the given list on the provided stacks.
+ *   If an invalid instruction is encountered, execution stops and an
+ *   error is returned.
  *
  * Parameters:
  *   - t_dlist **stack_a: Pointer to stack A.
@@ -64,15 +70,16 @@ static void	exec_all_two(t_dlist **stack_a,
  *   - char **tab: Array of instruction strings.
  *
  * Behavior:
- *   Iterates over the instruction array and for each instruction:
- *     - If it matches "pa\n", "pb\n", "sa\n", "sb\n", or "ss\n", calls the
- *       corresponding bonus push or swap function.
- *     - Otherwise, calls exec_all_two() to handle rotate commands.
+ *   1. Iterates over the instruction list.
+ *   2. Executes each instruction using the corresponding function.
+ *   3. If the instruction is not recognized, calls exec_all_two(),
+ *      which prints "Error" and stops execution.
  *
  * Returns:
- *   void.
+ *   - 0 if all instructions were executed successfully.
+ *   - 1 if an invalid instruction was encountered.
  */
-void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab)
+int	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab)
 {
 	int	i;
 
@@ -89,7 +96,8 @@ void	exec_all(t_dlist **stack_a, t_dlist **stack_b, char **tab)
 			swap_b_bonus(stack_b);
 		else if (!ft_strcmp(tab[i], "ss\n"))
 			swap_s_bonus(stack_a, stack_b);
-		else
-			exec_all_two(stack_a, stack_b, tab, i);
+		else if (exec_all_two(stack_a, stack_b, tab, i))
+			return (1);
 	}
+	return (0);
 }

@@ -11,39 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap_bonus.h"
-
-/*
- * Function: check_if_valid_instruction
- * --------------------------------------
- * Description:
- *   Checks if the given instruction string 's' matches one of the valid
- *   operations.
- *
- * Parameters:
- *   - char *s: The instruction string to validate.
- *
- * Behavior:
- *   Compares 's' against each valid instruction using ft_strcmp.
- *   Returns 0 if a match is found, 1 otherwise.
- *
- * Returns:
- *   - 0 if 's' is valid.
- *   - 1 if 's' is not a valid instruction.
- */
-static int	check_if_valid_instruction(char *s)
-{
-	if (!ft_strcmp(s, "sa\n") || !ft_strcmp(s, "sb\n") || !ft_strcmp(s, "ss\n"))
-		return (0);
-	if (!ft_strcmp(s, "ra\n") || !ft_strcmp(s, "rb\n") || !ft_strcmp(s, "rr\n"))
-		return (0);
-	if (!ft_strcmp(s, "rra\n") || !ft_strcmp(s, "rrb\n")
-		|| !ft_strcmp(s, "rrr\n"))
-		return (0);
-	if (!ft_strcmp(s, "pa\n") || !ft_strcmp(s, "pb\n"))
-		return (0);
-	return (1);
-}
-
 /*
  * Function: update_new_instructions
  * ---------------------------------
@@ -132,7 +99,7 @@ static char	**add_line(char *s, char **list)
  * ------------------------
  * Description:
  *   Executes all the instructions in the provided array on the two stacks,
- *   then verifies the final state.
+ *   then verifies whether the final state is sorted.
  *
  * Parameters:
  *   - t_dlist **stack_a: Pointer to stack A.
@@ -140,40 +107,44 @@ static char	**add_line(char *s, char **list)
  *   - char **tab: Array of instruction strings to execute.
  *
  * Behavior:
- *   Calls exec_all() to perform the operations, then checks whether stack A
- *   is sorted in ascending order and stack B is empty. Prints "OK" if both
- *   conditions are met; otherwise, prints "KO".
+ *   1. Calls exec_all() to execute all instructions.
+ *   2. If execution succeeds (there isn't invalid instruction : exec_all
+ *		returns 0), checks if stack A is sorted in ascending order
+ *		and stack B is empty.
+ *   3. Prints "OK" if the stacks are in the correct state, otherwise
+ *      prints "KO".
  *
  * Returns:
  *   void.
  */
 static void	exec_and_check(t_dlist **stack_a, t_dlist **stack_b, char **tab)
 {
-	exec_all(stack_a, stack_b, tab);
-	if (check_if_asc_sorted_list(*stack_a) == 1 && !(*stack_b))
-		ft_putstr_fd("OK\n", 1);
-	else
-		ft_putstr_fd("KO\n", 1);
+	if (!exec_all(stack_a, stack_b, tab))
+	{
+		if (check_if_asc_sorted_list(*stack_a) == 1 && !(*stack_b))
+			ft_putstr_fd("OK\n", 1);
+		else
+			ft_putstr_fd("KO\n", 1);
+	}
 }
 
 /*
  * Function: checker_instructions
  * ------------------------------
  * Description:
- *   Reads instructions from standard input, validates each one, and builds
- *   an array of valid instructions. Once input is complete, executes the
- *   instructions on the provided stacks and prints the result.
+ *   Reads a series of instructions from standard input, executes them,
+ *   and verifies if stack A is sorted at the end.
  *
  * Parameters:
  *   - t_dlist **stack_a: Pointer to stack A.
  *   - t_dlist **stack_b: Pointer to stack B.
  *
  * Behavior:
- *   Continuously reads lines using get_next_line() until EOF is reached.
- *   For each line, if the instruction is invalid, prints "Error" to stderr
- *   and frees the line; otherwise, adds it to the instructions list via
- *   add_line(). After input, if any instructions were collected, calls
- *   exec_and_check() to execute them and frees the instructions array.
+ *   1. Reads lines using get_next_line() until EOF.
+ *   2. Adds each valid instruction to the instructions list via add_line().
+ *   3. If instructions were collected, calls exec_and_check().
+ *   4. If no instructions were read, checks if stack A is already sorted
+ *      and stack B is empty, printing "OK" if so.
  *
  * Returns:
  *   0.
@@ -189,20 +160,14 @@ int	checker_instructions(t_dlist **stack_a, t_dlist **stack_b)
 	{
 		line = get_next_line(0);
 		if (line)
-		{
-			if (check_if_valid_instruction(line) != 0)
-			{
-				ft_putstr_fd("Error\n", 2);
-				free(line);
-			}
-			else
-				instructions = add_line(line, instructions);
-		}
+			instructions = add_line(line, instructions);
 	}
 	if (instructions)
 	{
 		exec_and_check(stack_a, stack_b, instructions);
 		free_str(instructions);
 	}
+	else if (check_if_asc_sorted_list(*stack_a) == 1 && !(*stack_b))
+		ft_putstr_fd("OK\n", 1);
 	return (0);
 }
