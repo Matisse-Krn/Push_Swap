@@ -74,10 +74,7 @@ static void	ft_alloc_write(char const *s, char c, unsigned int nb, char **tab)
 		{
 			tab[i] = malloc(sizeof(char) * (ft_len_word(s, c) + 1));
 			if (!tab[i])
-			{
-				ft_free_all(tab, i);
-				return ;
-			}
+				return (ft_free_all(tab, i));
 			j = 0;
 			while (*s && *s != c)
 				tab[i][j++] = *(s++);
